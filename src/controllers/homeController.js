@@ -21,14 +21,21 @@ let postNewGame = (req, res, next) => {
 };
 
 let gameManager = (req, res, next) => {
-	db.find({})
-	.then((data)=>res.render('pages/gameManager.ejs', {data}))
-	
-}
+	db.find({}).then((data) => res.render('pages/gameManager.ejs', { data }));
+};
+
+let showGame = (req, res, next) => {
+	db.findOne({ slug: req.params.slug })
+		.then((data) => {
+			res.render('pages/showGame.ejs', { data });
+		})
+		.catch(next);
+};
 
 module.exports = {
 	getHomepage,
 	createGame,
 	postNewGame,
-	gameManager
+	gameManager,
+	showGame,
 };

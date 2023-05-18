@@ -11,6 +11,10 @@ let initWebRoutes=(app)=>{
 
     router.get('/manager', homeControllers.gameManager)//trang quản lý trò chơi
 
+
+
+    router.get('/game/:slug', homeControllers.showGame)//show game khi click vào 1 game trong trang chủ
+
     return app.use('/', router)
 }
 

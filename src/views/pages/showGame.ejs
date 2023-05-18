@@ -1,0 +1,93 @@
+<body>
+    <%- include('../partials/head') %>
+        <%- include('../partials/header') %>
+
+            <div class="main-show mt-4">
+                <div class="body">
+                    <div class="row">
+                        <div class="main col-lg-8">
+                            <img class="avatar mt-3" src="<%=data.image%>">
+
+                            <h1 class="mt-3 mb-3">
+                                <%= data.title %>
+                            </h1>
+
+                            <h5>OVERVIEW</h5>
+                            <div class="overview">
+                                <%=data.decription%>
+                            </div>
+
+                            <h5>INFO</h5>
+                            <div class="info">
+                                <p>
+                                    Category: <%=data.category%>
+                                        <br></p>
+
+                                Developer: <%=data.developerInfor%>
+                                    <br></br>
+
+                                    Version: <%=data.version%>
+                                        <br></br>
+
+                                        OS: <%=data.os%>
+                                            <br></br>
+
+                                            Languages: <%=data.language%>
+                                                </p>
+
+                                                <h5>SCREEN SHOT</h5>
+
+                                                <h5>DOWNLOAD</h5>
+                                                <a href="<%=data.downloadLink%>">Link</a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="content">
+                                <a href="#"><img class="ml-4 FB" src="/image/FB.png" alt=""></a>
+                                <a href="#"><img class="ml-4 DC" src="/image/DC.png" alt=""></a>
+                            </div>
+
+                            <div class="discord mt-4">
+                                <iframe class="mt-4 ml-4"
+                                    src="https://discord.com/widget?id=916226590336233492&theme=dark" width="300"
+                                    height="300" allowtransparency="true" frameborder="0"
+                                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('../partials/footer') %>
+
+                <script>
+                    window.addEventListener('scroll', function () {
+                        var element = document.querySelector('.border');
+                        var content = document.querySelector('.content');
+                        var discord = document.querySelector('.discord');
+                        if (window.scrollY > element.offsetTop) {
+                            content.style.position = 'fixed';
+                            content.style.top = '30px';
+
+                            discord.style.position = 'fixed';
+                            discord.style.top = '180px'
+                        } else {
+                            content.style.position = 'static';
+                            discord.style.position = 'static';
+                        }
+                    });
+
+                    window.addEventListener('resize', function () {
+                        var content = document.querySelector('.content');
+                        var discord = document.querySelector('.discord');
+                        if (window.innerWidth < 1000) {
+                            content.style.display = 'none';
+                            discord.style.display = 'none';
+                        } else {
+                            content.style.display = 'block';
+                            discord.style.display = 'block';
+                        }
+                    });
+                </script>
+</body>

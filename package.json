@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
+    "watch": "node-sass --watch src/scss --output src/public/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,6 +23,7 @@
     "@babel/preset-env": "^7.12.10",
     "method-override": "^3.0.0",
     "mongoose-slug-updater": "^3.3.0",
+    "node-sass": "^8.0.0",
     "nodemon": "^2.0.7"
   }
 }
