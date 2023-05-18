@@ -1,8 +1,9 @@
 body{
     background-image: url('/image/5v3PTv.jpg');
+    background-size: cover;
+    height: 100%;
+    width: 100%;
 }
-
-
 
 .avatar{
     display: block;
@@ -10,14 +11,14 @@ body{
     height: auto;
 }
 
-.overview{
-    background-color: #fafafa;
-    border-color: #e5e5e5;
-    font-style: inherit;
+.decription{
+    background-color: #f1e6d9;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .main{
-    background-color: #fafafa;
+    background-color: #fff;
     margin-left: 30px;
     margin-right: 30px;
     border-radius: 20px;
@@ -25,14 +26,14 @@ body{
 
 
 .content{
-    background: #fafafa;
+    background: #fff;
     width: 350px;
     height: 150px;
     border-radius: 20px;
     position: static;
 }
 .discord{
-    background: #fafafa;
+    background: #fff;
     width: 350px;
     height: 345px;
     border-radius: 20px;
@@ -47,6 +48,6 @@ body{
 }
 
 .footer{
-    color: #fafafa;
+    color: #fff;
 }
 
