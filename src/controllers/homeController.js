@@ -20,8 +20,15 @@ let postNewGame = (req, res, next) => {
 		.catch(next);
 };
 
+let gameManager = (req, res, next) => {
+	db.find({})
+	.then((data)=>res.render('pages/gameManager.ejs', {data}))
+	
+}
+
 module.exports = {
 	getHomepage,
 	createGame,
 	postNewGame,
+	gameManager
 };

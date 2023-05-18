@@ -9,6 +9,8 @@ let initWebRoutes=(app)=>{
     router.get('/create', homeControllers.createGame)//tạo game
     router.post('/post-new-game', homeControllers.postNewGame)//đẩy game mới lên server
 
+    router.get('/manager', homeControllers.gameManager)//trang quản lý trò chơi
+
     return app.use('/', router)
 }
 

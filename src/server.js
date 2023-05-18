@@ -8,13 +8,13 @@ const db = require('./config/connectDB')
 let app = express();
 
 //config app
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 viewEngine(app)
 initWebroutes(app)
 
+//connect to database
 db.connect();
 
 let port = process.env.PORT||6969;
