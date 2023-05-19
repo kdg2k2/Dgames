@@ -23,7 +23,7 @@ let initWebRoutes=(app)=>{
     router.get('/game/delete', gameControllers.deleteGame)//chuyển tới thùng rác
 
     //slug
-    router.get('/game/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ
+    router.get('/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ
 
 
     return app.use('/', router)

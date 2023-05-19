@@ -3,9 +3,10 @@ import Game from '../models/Game';
 //----------------------
 //render trang quản lý game
 let gameManager = (req, res, next) => {
-	Game.find({})
-		.then((data) => res.render('pages/gameManager.ejs', { data }))
-		.catch(next);
+	Promise.all([Game.find({}), Game.countDocumentsDeleted()])
+		.then(([data, deletedcount])=>{
+			res.render('pages/gameManager.ejs', {data, deletedcount})
+		})
 };
 let gameManager_trash = (req, res, next) => {
 	Game.findDeleted({})
