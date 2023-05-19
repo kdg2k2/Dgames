@@ -35,7 +35,7 @@ let createGame = (req, res) => {
 let postNewGame = (req, res, next) => {
 	const game = new Game(req.body);
 	game.save()
-		.then(() => res.redirect('/'))
+		.then(() => res.redirect('/game/manager'))
 		.catch(next);
 }; //----------------------
 
