@@ -1,4 +1,6 @@
 import Game from '../models/Game';
+import CRUD from '../services/CRUDservice'
+
 //----------------------
 //render trang quản lý game
 let gameManager = (req, res, next) => {
@@ -31,29 +33,16 @@ let postNewGame = (req, res, next) => {
 //----------------------
 //render trang chỉnh sửa game
 let editGame = (req, res, next) => {
-	Game.findOne(req.params.id)
+	Game.findOne({ _id: req.query.id })
 		.then((data) => {
 			res.render('pages/editGame.ejs', { data });
 		})
 		.catch(next);
 };
-let putUpdatedGame = (req, res, next) => {
-	Game.findOne(req.params.id)
-		.then((data) => {
-			data.title = req.body.title;
-			data.decription = req.body.decription;
-			data.category = req.body.category;
-			data.image = req.body.image;
-			data.developerInfor = req.body.developerInfor;
-			data.version = req.body.version;
-			data.os = req.body.os;
-			data.language = req.body.language;
-			data.downloadLink = req.body.downloadLink;
-
-			data.save();
-			return res.redirect('/game/manager');
-		})
-		.catch(next);
+let putUpdatedGame = async (req, res, next) => {
+	let data = req.body
+	await CRUD.updateGame(data)
+	return res.redirect('/game/manager')
 };
 
 module.exports = {

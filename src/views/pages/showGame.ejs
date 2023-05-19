@@ -18,28 +18,23 @@
                             </div>
 
                             <h5>INFO</h5>
-                            <div class="info">
-                                <p>
-                                    Category: <%=data.category%>
-                                        <br></p>
+                            <div class="info mb-3">
+                                <p><strong>Category:</strong> <%=data.category%></p>
 
-                                Developer: <%=data.developerInfor%>
-                                    <br></br>
+                                <p><strong>Developer:</strong> <%=data.developerInfor%></p>
 
-                                    Version: <%=data.version%>
-                                        <br></br>
+                                <p><strong>Version:</strong> <%=data.version%></p>
 
-                                        OS: <%=data.os%>
-                                            <br></br>
+                                <p><strong>OS:</strong> <%=data.os%></p>
 
-                                            Languages: <%=data.language%>
-                                                </p>
-
-                                                <h5>SCREEN SHOT</h5>
-
-                                                <h5>DOWNLOAD</h5>
-                                                <a href="<%=data.downloadLink%>">Link</a>
+                                <p><strong>Languages:</strong> <%=data.language%></p>
                             </div>
+
+                            <h5>SCREEN SHOT</h5>
+                            <div class="screen-shot mb-3"></div>
+
+                            <h5 class="mb-5">DOWNLOAD: <a href="<%=data.downloadLink%>%>">Google Drive</a></h5>
+                            
                         </div>
 
                         <div class="col-lg-2">
