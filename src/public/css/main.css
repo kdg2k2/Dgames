@@ -1,5 +1,5 @@
 body {
-  background-image: url("/image/background_image.jpg");
+  background-image: url("/image/homeBackground.jpg");
   background-size: cover;
   height: 100%;
   width: 100%; }
@@ -48,3 +48,9 @@ body {
 
 .footer {
   color: #fff; }
+
+.nav-link:hover {
+  color: #E8D426; }
+
+a:hover {
+  text-decoration: none; }

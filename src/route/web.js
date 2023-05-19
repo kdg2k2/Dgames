@@ -1,11 +1,25 @@
 import express from 'express';
 import homeControllers from '../controllers/homeController';
 import gameControllers from '../controllers/gameController';
+import userControllers from '../controllers/userController';
 
 let router = express.Router();
 
 let initWebRoutes=(app)=>{
     router.get('/', homeControllers.getHomepage)//trang chủ
+
+    //--------------User space---------------
+    //Login
+    router.get('/login', userControllers.loginForm)//render trang loggin
+    router.post('/user/loading-user', userControllers.loginSuccess)//post user lên server để kiểm tra
+    router.get('/user/logged', userControllers.logged)//render trang home của admin
+
+    //Register
+    router.get('/user/register', userControllers.registerForm)//render trang register
+    router.post('/user/register-new-user', userControllers.postNewUser)//post new user
+
+    //logOut
+    router.get('/logout', userControllers.logout)
 
 
     //-------------Game Route Space----------------
@@ -30,8 +44,7 @@ let initWebRoutes=(app)=>{
 
     //slug
     router.get('/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ
-
-
+    
     return app.use('/', router)
 }
 
