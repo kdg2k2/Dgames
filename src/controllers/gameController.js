@@ -1,5 +1,4 @@
 import Game from '../models/Game';
-import CRUD from '../services/CRUDservice'
 
 //----------------------
 //render trang quản lý game
@@ -40,9 +39,9 @@ let editGame = (req, res, next) => {
 		.catch(next);
 };
 let putUpdatedGame = async (req, res, next) => {
-	let data = req.body
-	await CRUD.updateGame(data)
-	return res.redirect('/game/manager')
+	Game.updateOne({ _id: req.body._id }, req.body)
+		.then(() => res.redirect('/game/manager'))
+		.catch(next);
 };
 
 module.exports = {

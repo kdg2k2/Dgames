@@ -21,7 +21,7 @@ let initWebRoutes=(app)=>{
 
     //slug
     router.get('/game/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ
-    
+
 
     return app.use('/', router)
 }
