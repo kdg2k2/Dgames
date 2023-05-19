@@ -10,6 +10,7 @@ let initWebRoutes=(app)=>{
 
     //-------------Game Route Space----------------
     router.get('/game/manager', gameControllers.gameManager)//trang quản lý trò chơi
+    router.get('/game/manager/trash', gameControllers.gameManager_trash)//trang quản lý trò chơi
 
     //create
     router.get('/game/create', gameControllers.createGame)//tạo game
@@ -18,6 +19,8 @@ let initWebRoutes=(app)=>{
     //edit
     router.get('/game/edit', gameControllers.editGame)//render trang chỉnh sửa game
     router.post('/put-edited-game', gameControllers.putUpdatedGame)//post game sau khi chỉnh sửa
+
+    router.get('/game/delete', gameControllers.deleteGame)//chuyển tới thùng rác
 
     //slug
     router.get('/game/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ

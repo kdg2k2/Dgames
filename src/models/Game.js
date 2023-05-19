@@ -22,4 +22,10 @@ const GameSchema = new Schema(
 	}
 );
 
+const mongoose_delete = require('mongoose-delete');
+GameSchema.plugin(mongoose_delete, {
+	overrideMethods: 'all',
+	deletedAt: true,
+});
+
 module.exports = mongoose.model('Game', GameSchema);

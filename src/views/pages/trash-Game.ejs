@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-    <title>Game Manager</title>
+    <title>Trash Game Manager</title>
 </head>
 
 <body>
     <div class="container mt-3">
         <div>
-            <h3>Games của tôi</h3>
-            <a href="/game/manager/trash">Thùng rác</a>
+            <h3>Thùng rác Game</h3>
+            <a href="/game/manager">Quay Lại</a>
         </div>
 
         <div class="mt-4 d-flex align-items-center">
@@ -27,7 +27,7 @@
 
             <select class="form-control form-control-sm checkbox-select-all-options ml-3 w-25" name="action" required>
                 <option value="">--Chọn hành động--</option>
-                <option value="delete">Xóa</option>
+                <option value="restore">Khôi Phục</option>
             </select>
 
             <button class="btn btn-primary btn-sm btn-submit ml-3" disabled>Thực hiện</button>
@@ -46,8 +46,7 @@
                     <th scope="col">OS</th>
                     <th scope="col">Language</th>
                     <th scope="col">Download</th>
-                    <th scope="col">CreatedAt</th>
-                    <th scope="col">UpdatedAt</th>
+                    <th scope="col">DeletedAt</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -83,15 +82,12 @@
                             <%= data[i].downloadLink %>
                         </td>
                         <td>
-                            <%= data[i].createdAt %>
+                            <%= data[i].deletedAt %>
                         </td>
                         <td>
-                            <%= data[i].updatedAt %>
+                            <a href="/game/restore?id=<%=data[i]._id%>" class="btn-restore">Khôi Phục</a>
                         </td>
-                        <td>
-                            <a href="/game/edit?id=<%=data[i]._id%>" class="btn-edit">Sửa</a>
-                        </td>
-                        <td><a href="/game/delete?id=<%=data[i]._id%>" class="btn-delete"> Xóa </a></td>
+                        <td><a href="/game/force-delete?id=<%=data[i]._id%>" class="btn-force-delete"> Xóa vĩnh viễn </a></td>
                     </tr>
                     <% } %>
             </tbody>

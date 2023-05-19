@@ -3,8 +3,16 @@ import Game from '../models/Game';
 //----------------------
 //render trang quản lý game
 let gameManager = (req, res, next) => {
-	Game.find({}).then((data) => res.render('pages/gameManager.ejs', { data }));
-}; //----------------------
+	Game.find({})
+		.then((data) => res.render('pages/gameManager.ejs', { data }))
+		.catch(next);
+};
+let gameManager_trash = (req, res, next) => {
+	Game.findDeleted({})
+		.then((data) => res.render('pages/trash-Game.ejs', { data }))
+		.catch(next);
+};
+//----------------------
 
 //----------------------
 //show ra nội dung khi click vào
@@ -44,11 +52,19 @@ let putUpdatedGame = async (req, res, next) => {
 		.catch(next);
 };
 
+let deleteGame = (req, res, next) => {
+	Game.delete({ _id: req.query.id })
+		.then(() => res.redirect('/game/manager'))
+		.catch(next);
+};
+
 module.exports = {
 	createGame,
 	postNewGame,
 	gameManager,
+	gameManager_trash,
 	showGame,
 	editGame,
 	putUpdatedGame,
+	deleteGame,
 };
