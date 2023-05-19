@@ -3,10 +3,11 @@ import Game from '../models/Game';
 //----------------------
 //render trang quản lý game
 let gameManager = (req, res, next) => {
-	Promise.all([Game.find({}), Game.countDocumentsDeleted()])
-		.then(([data, deletedcount])=>{
-			res.render('pages/gameManager.ejs', {data, deletedcount})
-		})
+	Promise.all([Game.find({}), Game.countDocumentsDeleted()]).then(
+		([data, deletedcount]) => {
+			res.render('pages/gameManager.ejs', { data, deletedcount });
+		}
+	);
 };
 let gameManager_trash = (req, res, next) => {
 	Game.findDeleted({})
@@ -58,6 +59,17 @@ let deleteGame = (req, res, next) => {
 		.then(() => res.redirect('/game/manager'))
 		.catch(next);
 };
+let forceDelete = (req, res, next) => {
+	Game.deleteOne({ _id: req.query.id })
+		.then(() => res.redirect('back'))
+		.catch(next);
+};
+
+let restoreGame = (req, res, next) => {
+	Game.restore({ _id: req.query.id })
+		.then(() => res.redirect('back'))
+		.catch(next);
+};
 
 module.exports = {
 	createGame,
@@ -68,4 +80,6 @@ module.exports = {
 	editGame,
 	putUpdatedGame,
 	deleteGame,
+	forceDelete,
+	restoreGame,
 };
