@@ -88,8 +88,7 @@ a:hover {
 .screenshot-img {
   display: inline-block;
   width: auto;
-  height: 100%;
-  margin-right: 10px; }
+  height: 100%; }
 
 .thumbnail-wrapper::-webkit-scrollbar {
   height: 8px; }

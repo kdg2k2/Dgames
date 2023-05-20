@@ -56,7 +56,8 @@
 
                             <div>
                                 <h5 class="mb-5">DOWNLOAD</h5>
-                                <p class="download"><strong>Windows: </strong><a href="<%=data.downloadLink%>%>">Link</a></p>
+                                <p class="download"><strong>Windows: </strong><a
+                                        href="<%=data.downloadLink%>%>">Link</a></p>
                             </div>
 
                         </div>
@@ -113,12 +114,14 @@
                     document.addEventListener("DOMContentLoaded", function () {
                         const smallImgs = document.querySelectorAll(".screenshot-img");
                         const largeImg = document.querySelector(".large-img");
+                        let currentIndex = 0;
 
                         // Hiển thị ảnh đầu tiên là ảnh mặc định
                         largeImg.src = smallImgs[0].src;
+                        smallImgs[0].classList.add("selected");
 
                         // Xử lý sự kiện click trên ảnh nhỏ
-                        smallImgs.forEach(function (img) {
+                        smallImgs.forEach(function (img, index) {
                             img.addEventListener("click", function () {
                                 // Bỏ chọn tất cả các ảnh nhỏ
                                 smallImgs.forEach(function (smallImg) {
@@ -130,8 +133,30 @@
 
                                 // Hiển thị ảnh lớn tương ứng
                                 largeImg.src = this.src;
+
+                                // Cập nhật chỉ số hiện tại
+                                currentIndex = index;
                             });
                         });
+
+                        // Thay đổi ảnh lớn sau mỗi 5 giây
+                        setInterval(function () {
+                            currentIndex = (currentIndex + 1) % smallImgs.length;
+
+                            // Bỏ chọn tất cả các ảnh nhỏ
+                            smallImgs.forEach(function (smallImg) {
+                                smallImg.classList.remove("selected");
+                            });
+
+                            // Chọn ảnh nhỏ tương ứng với ảnh lớn
+                            smallImgs[currentIndex].classList.add("selected");
+
+                            // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
+                            setTimeout(function () {
+                                largeImg.src = smallImgs[currentIndex].src;
+                            }, 500);
+
+                        }, 5000);
                     });
 
                 </script>
