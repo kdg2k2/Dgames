@@ -3,6 +3,7 @@ body{
     background-size: cover;
     height: 100%;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .avatar{
@@ -26,31 +27,35 @@ body{
 
 .main{
     background-color: #fff;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 70px;
     border-radius: 20px;
 }
 
 .content{
     background: #fff;
-    width: 350px;
+    width: 321px;
     height: 150px;
     border-radius: 20px;
-    position: static;
 }
+
 .discord{
     background: #fff;
-    width: 350px;
-    height: 345px;
+    width: 321px;
+    height: 328px;
     border-radius: 20px;
-    position: static;
-    
 }
+
 .FB, .DC{
     width: 300px;
     height: 50px;
     line-height: 150px;
     margin-top: 18px;
+    margin-left: 10px;
+}
+
+.discord-iframe{
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 .footer{
