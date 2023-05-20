@@ -13,9 +13,9 @@
                             </h1>
 
                             <h5>OVERVIEW</h5>
-                            <div>
-                                <p class="decription">
-                                    <%=data.decription%>
+                            <div class="description mb-3">
+                                <p>
+                                    <%= data.description %>
                                 </p>
                             </div>
 
@@ -26,7 +26,7 @@
                                 </p>
 
                                 <p><strong>Developer:</strong>
-                                    <%=data.developerInfor%>
+                                    <%=data.developerInfo%>
                                 </p>
 
                                 <p><strong>Version:</strong>
@@ -43,9 +43,21 @@
                             </div>
 
                             <h5>SCREEN SHOT</h5>
-                            <div class="screen-shot mb-3"></div>
+                            <div class="screen-shot mb-3">
+                                <div class="image-container">
+                                    <img class="large-img" src="<%= data.screenshots[0] %>">
+                                </div>
+                                <div class="thumbnail-wrapper">
+                                    <% data.screenshots.forEach(function(screenshot) { %>
+                                        <img class="screenshot-img" src="<%= screenshot %>">
+                                        <% }); %>
+                                </div>
+                            </div>
 
-                            <h5 class="mb-5">DOWNLOAD: <a href="<%=data.downloadLink%>%>">Google Drive</a></h5>
+                            <div>
+                                <h5 class="mb-5">DOWNLOAD</h5>
+                                <p class="download"><strong>Windows: </strong><a href="<%=data.downloadLink%>%>">Link</a></p>
+                            </div>
 
                         </div>
 
@@ -96,5 +108,31 @@
                             discord.style.display = 'block';
                         }
                     });
+
+                    // Lắng nghe sự kiện click trên ảnh nhỏ
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const smallImgs = document.querySelectorAll(".screenshot-img");
+                        const largeImg = document.querySelector(".large-img");
+
+                        // Hiển thị ảnh đầu tiên là ảnh mặc định
+                        largeImg.src = smallImgs[0].src;
+
+                        // Xử lý sự kiện click trên ảnh nhỏ
+                        smallImgs.forEach(function (img) {
+                            img.addEventListener("click", function () {
+                                // Bỏ chọn tất cả các ảnh nhỏ
+                                smallImgs.forEach(function (smallImg) {
+                                    smallImg.classList.remove("selected");
+                                });
+
+                                // Chọn ảnh nhỏ được click
+                                this.classList.add("selected");
+
+                                // Hiển thị ảnh lớn tương ứng
+                                largeImg.src = this.src;
+                            });
+                        });
+                    });
+
                 </script>
 </body>

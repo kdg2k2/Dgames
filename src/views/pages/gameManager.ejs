@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <title>Game Manager</title>
+
     <style>
         h1{
             color:#000
@@ -45,68 +46,69 @@
         </div>
     </div>
 
-        <table class="table table-hover mt-3 mb-5">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Decription</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Developer</th>
-                    <th scope="col">Version</th>
-                    <th scope="col">OS</th>
-                    <th scope="col">Language</th>
-                    <th scope="col">Download</th>
-                    <th scope="col">CreatedAt</th>
-                    <th scope="col">UpdatedAt</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(let i=0; i < data.length; i++) { %>
+        <div class="container-fluid">
+            <table class="table table-hover table-bordered mt-3 mb-5">
+                <thead class="thead-light">
                     <tr>
-                        <td>
-                            <%= data[i].title %>
-                        </td>
-                        <td>
-                            <%= data[i].decription %>
-                        </td>
-                        <td>
-                            <%= data[i].category %>
-                        </td>
-                        <td>
-                            <%= data[i].image %>
-                        </td>
-                        <td>
-                            <%= data[i].developerInfor %>
-                        </td>
-                        <td>
-                            <%= data[i].version %>
-                        </td>
-                        <td>
-                            <%= data[i].os %>
-                        </td>
-                        <td>
-                            <%= data[i].language %>
-                        </td>
-                        <td>
-                            <%= data[i].downloadLink %>
-                        </td>
-                        <td>
-                            <%= data[i].createdAt %>
-                        </td>
-                        <td>
-                            <%= data[i].updatedAt %>
-                        </td>
-                        <td>
-                            <a href="/game/edit?id=<%=data[i]._id%>" class="btn-edit">Sửa</a>
-                        </td>
-                        <td><a href="/game/delete?id=<%=data[i]._id%>" class="btn-delete"> Xóa </a></td>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Developer</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">OS</th>
+                        <th scope="col">Language</th>
+                        <th scope="col">Download</th>
+                        <th scope="col">CreatedAt</th>
+                        <th scope="col">UpdatedAt</th>
+                        <th colspan="2"></th>
                     </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i < data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= i+1 %>
+                            </td>
+                            <td>
+                                <%= data[i].title %>
+                            </td>
+                            <td>
+                                <%= data[i].description %>
+                            </td>
+                            <td>
+                                <%= data[i].category %>
+                            </td>
+                            <td>
+                                <%= data[i].developerInfo %>
+                            </td>
+                            <td>
+                                <%= data[i].version %>
+                            </td>
+                            <td>
+                                <%= data[i].os %>
+                            </td>
+                            <td>
+                                <%= data[i].language %>
+                            </td>
+                            <td>
+                                <%= data[i].downloadLink %>
+                            </td>
+                            <td>
+                                <%= data[i].createdAt %>
+                            </td>
+                            <td>
+                                <%= data[i].updatedAt %>
+                            </td>
+                            <td>
+                                <a href="/game/edit?id=<%=data[i]._id%>" class="btn-edit">Sửa</a>
+                            </td>
+                            <td><a href="/game/delete?id=<%=data[i]._id%>" class="btn-delete"> Xóa </a></td>
+                        </tr>
                     <% } %>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

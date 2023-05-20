@@ -34,9 +34,13 @@ let createGame = (req, res) => {
 //đẩy dữ liệu đc nhập lên server
 let postNewGame = (req, res, next) => {
 	const game = new Game(req.body);
+	game.screenshots = req.body.screenshots
+		.split('\n')
+		.map((screenshot) => screenshot.trim());
 	game.save()
 		.then(() => res.redirect('/game/manager'))
 		.catch(next);
+	// res.send(game);
 }; //----------------------
 
 //----------------------
@@ -49,9 +53,12 @@ let editGame = (req, res, next) => {
 		.catch(next);
 };
 let putUpdatedGame = async (req, res, next) => {
-	Game.updateOne({ _id: req.body._id }, req.body)
-		.then(() => res.redirect('/game/manager'))
-		.catch(next);
+	const screenshots = req.body.screenshots
+		.split('\n')
+		.map((screenshot) => screenshot.trim());
+	req.body.screenshots = screenshots;
+	await Game.updateOne({ _id: req.body._id }, req.body);
+	res.redirect('/game/manager');
 };
 
 let deleteGame = (req, res, next) => {

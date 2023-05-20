@@ -21,8 +21,8 @@
 				</div>
 
 				<div class="form-group">
-					<label for="decription">Decription</label>
-					<input type="text" class="form-control" name="decription" value="<%=data.decription%>" />
+					<label for="description">Description</label>
+					<input type="text" class="form-control" name="description" value="<%=data.description%>" />
 				</div>
 
 				<div class="form-group">
@@ -36,8 +36,8 @@
 				</div>
 
 				<div class="form-group">
-					<label for="developerInfor">DeveloperInfor</label>
-					<input type="text" class="form-control" name="developerInfor" value="<%=data.developerInfor%>" />
+					<label for="developerInfo">DeveloperInfo</label>
+					<input type="text" class="form-control" name="developerInfo" value="<%=data.developerInfo%>" />
 				</div>
 
 				<div class="form-group">
@@ -59,6 +59,17 @@
 					<label for="downloadLink">Download Link</label>
 					<input type="text" class="form-control" name="downloadLink" value="<%=data.downloadLink%>" />
 				</div>
+
+				<div class="form-group">
+					<label for="screenshots">Screenshots</label>
+					<textarea class="form-control" name="screenshots" rows="6"><%=
+						data.screenshots.map(function(screenshot) {
+						  return screenshot.trim();
+						}).join('\n');
+					  %></textarea>
+																						 
+					<small class="form-text text-muted">Enter multiple image URLs, each on a new line.</small>
+				</div>	
 
 				<input type="text" name="_id" value="<%=data._id%>" hidden>
 

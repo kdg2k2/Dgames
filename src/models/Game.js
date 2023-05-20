@@ -7,20 +7,23 @@ const Schema = mongoose.Schema;
 const GameSchema = new Schema(
 	{
 		title: { type: String },
-		decription: { type: String },
+		description: { type: String },
 		category: { type: String },
 		image: { type: String },
-		developerInfor: { type: String },
+		developerInfo: { type: String },
 		version: { type: String },
 		os: { type: String },
 		language: { type: String },
 		downloadLink: { type: String },
 		slug: { type: String, slug: 'title', unique: true },
-	}, 
+		screenshots: [{ type: String }], // Sửa thành mảng các đường dẫn ảnh
+	},
 	{
 		timestamps: true,
 	}
 );
+
+
 
 const mongoose_delete = require('mongoose-delete');
 GameSchema.plugin(mongoose_delete, {
