@@ -3,7 +3,7 @@
         <%- include('../partials/header') %>
 
             <div class="main-show mt-4">
-                <div class="body">
+                <div class="container">
                     <div class="row">
                         <div class="main col-8">
                             <img class="avatar mt-3" src="<%=data.image%>">
@@ -13,37 +13,33 @@
                             </h1>
 
                             <h5>OVERVIEW</h5>
-                            <div class="description mb-3">
+                            <div class="description mb-3 text-center">
                                 <p>
                                     <%= data.description %>
                                 </p>
                             </div>
 
                             <h5>INFO</h5>
-                            <div class="info mb-3">
+                            <div class="info mb-3 text-center">
                                 <p><strong>Category:</strong>
                                     <%=data.category%>
                                 </p>
-
                                 <p><strong>Developer:</strong>
                                     <%=data.developerInfo%>
                                 </p>
-
                                 <p><strong>Version:</strong>
                                     <%=data.version%>
                                 </p>
-
                                 <p><strong>OS:</strong>
                                     <%=data.os%>
                                 </p>
-
                                 <p><strong>Languages:</strong>
                                     <%=data.language%>
                                 </p>
                             </div>
 
                             <h5>SCREEN SHOT</h5>
-                            <div class="screen-shot mb-3">
+                            <div class="screen-shot mb-3 text-center">
                                 <div class="image-container">
                                     <img class="large-img" src="<%= data.screenshots[0] %>">
                                 </div>
@@ -54,15 +50,14 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <h5 class="mb-5">DOWNLOAD</h5>
-                                <p class="download"><strong>Windows: </strong><a
-                                        href="<%=data.downloadLink%>%>">Link</a></p>
+                            <h5>DOWNLOAD</h5>
+                            <div class="download mb-5">
+                                <p><strong>Windows: </strong><a href="<%=data.downloadLink%>">Link</a></p>
                             </div>
 
                         </div>
 
-                        <div class="col-2">
+                        <div class="col-3">
                             <div class="content">
                                 <a href="#"><img class="FB" src="/image/FB.png" alt=""></a>
                                 <a href="#"><img class="DC" src="/image/DC.png" alt=""></a>
@@ -71,7 +66,7 @@
                             <div class="discord mt-4">
                                 <iframe class="discord-iframe"
                                     src="https://discord.com/widget?id=916226590336233492&theme=dark" width="300"
-                                    height="300" allowtransparency="true" frameborder="0"
+                                    height="335" allowtransparency="true" frameborder="0"
                                     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                             </div>
                         </div>
@@ -101,12 +96,19 @@
                     window.addEventListener('resize', function () {
                         var content = document.querySelector('.content');
                         var discord = document.querySelector('.discord');
+                        var main = document.querySelector('.main');
                         if (window.innerWidth < 1000) {
                             content.style.display = 'none';
                             discord.style.display = 'none';
+
+                            main.classList.remove('col-8');
+                            main.classList.add('col-12');
                         } else {
                             content.style.display = 'block';
                             discord.style.display = 'block';
+
+                            main.classList.remove('col-12');
+                            main.classList.add('col-8');
                         }
                     });
 

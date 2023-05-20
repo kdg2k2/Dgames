@@ -24,8 +24,8 @@ body {
 
 .main {
   background-color: #fff;
-  margin-left: 70px;
-  border-radius: 20px; }
+  border-radius: 20px;
+  margin-right: 30px; }
 
 .content {
   background: #fff;
@@ -36,7 +36,7 @@ body {
 .discord {
   background: #fff;
   width: 321px;
-  height: 328px;
+  height: 365px;
   border-radius: 20px; }
 
 .FB, .DC {
@@ -99,9 +99,6 @@ a:hover {
 
 .thumbnail-wrapper::-webkit-scrollbar-track {
   background-color: #f2f2f2; }
-
-.download {
-  margin-top: -40px; }
 
 .home-card-game {
   border-radius: 20px; }
