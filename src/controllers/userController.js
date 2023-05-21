@@ -6,14 +6,22 @@ let loginForm = (req, res, next) => {
 	res.render('pages/login.ejs');
 };
 let loginSuccess = (req, res, next) => {
-	User.findOne({ username: req.body.username, password: md5(req.body.password) })
-		.then((user) => {
-			if (!user) {
+	User.findOne({ username: req.body.username })
+		.then((username) => {
+			if (!username) {
 				res.send('User not found');
 			} else {
-				Game.find({}).then((data) => {
-					res.render('pages/adminPage.ejs', { data });
-				});
+				User.findOne({ password: md5(req.body.password) })
+					.then((password) => {
+						if (!password) {
+							res.send('Wrong password');
+						} else {
+							Game.find({}).then((data) => {
+								res.render('pages/adminPage.ejs', { data });
+							});
+						}
+					})
+					.catch(next);
 			}
 		})
 		.catch(next);

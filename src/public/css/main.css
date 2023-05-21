@@ -121,3 +121,6 @@ a:hover {
 
 .home-card-game {
   border-radius: 20px; }
+
+.home-img-game {
+  border-radius: 20px 20px 0 0; }

@@ -69,51 +69,55 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0; i < data.length; i++) { %>
-                        <tr>
-                            <td>
-                                <input type="checkbox" value="<%=data[i]._id%>" name="gameIds[]">
-                            </td>
-                            <td>
-                                <%= i+1 %>
-                            </td>
-                            <td>
-                                <%= data[i].title %>
-                            </td>
-                            <td>
-                                <%= data[i].description %>
-                            </td>
-                            <td>
-                                <%= data[i].category %>
-                            </td>
-                            <td>
-                                <%= data[i].developerInfo %>
-                            </td>
-                            <td>
-                                <%= data[i].version %>
-                            </td>
-                            <td>
-                                <%= data[i].os %>
-                            </td>
-                            <td>
-                                <%= data[i].language %>
-                            </td>
-                            <td>
-                                <%= data[i].downloadLink %>
-                            </td>
-                            <td>
-                                <%= data[i].createdAt %>
-                            </td>
-                            <td>
-                                <%= data[i].updatedAt %>
-                            </td>
-                            <td>
-                                <a href="/game/edit?id=<%=data[i]._id%>" class="btn-edit">Sửa</a>
-                            </td>
-                            <td><a href="/game/delete?id=<%=data[i]._id%>" class="btn-delete"> Xóa </a></td>
-                        </tr>
-                        <% } %>
-                </tbody>
+                    <% var reversedData = data.slice().reverse(); %>
+                    <% for(let i = 0; i < reversedData.length; i++) { %>
+                      <tr>
+                        <td>
+                          <input type="checkbox" value="<%= reversedData[i]._id %>" name="gameIds[]">
+                        </td>
+                        <td>
+                          <%= i + 1 %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].title %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].description %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].category %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].developerInfo %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].version %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].os %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].language %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].downloadLink %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].createdAt %>
+                        </td>
+                        <td>
+                          <%= reversedData[i].updatedAt %>
+                        </td>
+                        <td>
+                          <a href="/game/edit?id=<%= reversedData[i]._id %>" class="btn-edit">Sửa</a>
+                        </td>
+                        <td>
+                          <a href="/game/delete?id=<%= reversedData[i]._id %>" class="btn-delete">Xóa</a>
+                        </td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                  
             </table>
         </div>
         </form>

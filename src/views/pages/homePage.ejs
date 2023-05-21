@@ -4,21 +4,23 @@
 
             <div class="container">
                 <div class="row">
-                    <% for(let i=0; i < data.length; i++) { %>
-                        <div class="col-4 col-3">
-                            <div class="card mt-4 home-card-game">
-                                <a href="/<%= data[i].slug %>">
-                                    <img style="height: 300px;" class="card-img-top home-card-game" src="<%= data[i].image %>">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <%= data[i].title %>
-                                        </h5>
-                                    </div>
-                                </a>
+                    <% var reversedData = data.slice().reverse(); %>
+                    <% for(let i=0; i < reversedData.length; i++) { %>
+                      <div class="col-4 col-3">
+                        <div class="card mt-4 home-card-game">
+                          <a href="/<%= reversedData[i].slug %>">
+                            <img style="height: 300px;" class="card-img-top home-img-game" src="<%= reversedData[i].image %>">
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                <%= reversedData[i].title %>
+                              </h5>
                             </div>
+                          </a>
                         </div>
-                        <% } %>
-                </div>
+                      </div>
+                    <% } %>
+                  </div>
+                  
             </div>
             </div>
 
