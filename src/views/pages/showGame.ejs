@@ -13,14 +13,14 @@
                             </h1>
 
                             <h5>OVERVIEW</h5>
-                            <div class="description mb-3 text-center">
+                            <div class="description mb-3">
                                 <p>
                                     <%= data.description %>
                                 </p>
                             </div>
 
                             <h5>INFO</h5>
-                            <div class="info mb-3 text-center">
+                            <div class="info mb-3">
                                 <p><strong>Category:</strong>
                                     <%=data.category%>
                                 </p>
@@ -39,7 +39,7 @@
                             </div>
 
                             <h5>SCREEN SHOT</h5>
-                            <div class="screen-shot mb-3 text-center">
+                            <div class="screen-shot mb-3">
                                 <div class="image-container">
                                     <img class="large-img" src="<%= data.screenshots[0] %>">
                                 </div>
@@ -77,6 +77,7 @@
             <%- include('../partials/footer') %>
 
                 <script>
+                    //kéo trang tới border của header sẽ gán position fixed
                     window.addEventListener('scroll', function () {
                         var element = document.querySelector('.border');
                         var content = document.querySelector('.content');
@@ -90,25 +91,6 @@
                         } else {
                             content.style.position = 'static';
                             discord.style.position = 'static';
-                        }
-                    });
-
-                    window.addEventListener('resize', function () {
-                        var content = document.querySelector('.content');
-                        var discord = document.querySelector('.discord');
-                        var main = document.querySelector('.main');
-                        if (window.innerWidth < 1000) {
-                            content.style.display = 'none';
-                            discord.style.display = 'none';
-
-                            main.classList.remove('col-8');
-                            main.classList.add('col-12');
-                        } else {
-                            content.style.display = 'block';
-                            discord.style.display = 'block';
-
-                            main.classList.remove('col-12');
-                            main.classList.add('col-8');
                         }
                     });
 

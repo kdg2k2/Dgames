@@ -1,4 +1,11 @@
 @charset "UTF-8";
+@media (max-width: 1090px) {
+  .content, .discord {
+    display: none; }
+  .main {
+    flex-basis: 100%;
+    max-width: 100%; } }
+
 body {
   background-image: url("/image/homeBackground.jpg");
   background-size: cover;
