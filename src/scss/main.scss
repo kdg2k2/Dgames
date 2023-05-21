@@ -4,7 +4,21 @@
     display: none;
   }
 
-  .main {
+@media (max-width: 991px) {
+  .col-4, .col-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-4, .col-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+.main {
     flex-basis: 100%;
     max-width: 100%;
   }

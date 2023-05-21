@@ -1,11 +1,12 @@
 import User from '../models/User';
 import Game from '../models/Game';
+import md5 from 'md5';
 
 let loginForm = (req, res, next) => {
 	res.render('pages/login.ejs');
 };
 let loginSuccess = (req, res, next) => {
-	User.findOne({ username: req.body.username, password: req.body.password })
+	User.findOne({ username: req.body.username, password: md5(req.body.password) })
 		.then((user) => {
 			if (!user) {
 				res.send('User not found');
@@ -30,15 +31,17 @@ let registerForm = (req, res, next) => {
 };
 let postNewUser = (req, res, next) => {
 	const user = new User(req.body);
+	user.email = md5(req.body.email);
+	user.password = md5(req.body.password);
 	user.save()
 		.then(() => {
-			res.redirect('/user/login');
+			res.redirect('/login');
 		})
 		.catch(next);
 };
 
 let logout = (req, res) => {
-	res.redirect('/')
+	res.redirect('/');
 };
 
 module.exports = {

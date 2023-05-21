@@ -1,7 +1,19 @@
 @charset "UTF-8";
 @media (max-width: 1090px) {
   .content, .discord {
-    display: none; }
+    display: none; } }
+
+@media (max-width: 1090px) and (max-width: 991px) {
+  .col-4, .col-3 {
+    flex: 0 0 50%;
+    max-width: 50%; } }
+
+@media (max-width: 1090px) and (max-width: 576px) {
+  .col-4, .col-3 {
+    flex: 0 0 100%;
+    max-width: 100%; } }
+
+@media (max-width: 1090px) {
   .main {
     flex-basis: 100%;
     max-width: 100%; } }
