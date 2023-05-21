@@ -42,6 +42,8 @@ let initWebRoutes=(app)=>{
     //restore
     router.get('/game/restore', gameControllers.restoreGame)//khôi phục từ thùng rác
 
+    router.get('/game/handle-form-action', gameControllers.handleFormAction)
+
     //slug
     router.get('/:slug', gameControllers.showGame)//show game khi click vào 1 game trong trang chủ
     

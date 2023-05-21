@@ -78,6 +78,30 @@ let restoreGame = (req, res, next) => {
 		.catch(next);
 };
 
+let handleFormAction = (req, res, next) => {
+	switch (req.query.action) {
+		case 'delete':
+			Game.delete({ _id: { $in: req.query.gameIds } })
+				.then(() => res.redirect('/game/manager'))
+				.catch(next);
+			break;
+		case 'restore':
+			Game.restore({ _id: { $in: req.query.gameIds } })
+				.then(() => res.redirect('back'))
+				.catch(next);
+			break;
+		case 'force-delete':
+			Game.deleteOne({ _id: { $in: req.query.gameIds } })
+				.then(() => res.redirect('back'))
+				.catch(next);
+			break;
+
+		default:
+			res.json({ message: 'Unknown action' });
+			break;
+	}
+};
+
 module.exports = {
 	createGame,
 	postNewGame,
@@ -89,4 +113,5 @@ module.exports = {
 	deleteGame,
 	forceDelete,
 	restoreGame,
+	handleFormAction,
 };

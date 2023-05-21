@@ -10,46 +10,49 @@
     <title>Game Manager</title>
 
     <style>
-        h1{
-            color:#000
+        h1 {
+            color: #000
         }
 
-        .my-title{
-            margin-left: 20px;
+        .my-title {
+            margin-left: 40px;
             margin-top: -20px;
             margin-bottom: 20px;
         }
-        
     </style>
 </head>
+
 <body>
     <%- include('../partials/adminHeader') %>
-    
-    <div class="my-title">
-        <h3>Games của tôi</h3>
-        <a href="/game/manager/trash">Thùng rác (<%= deletedcount%>)</a>
-    
-        <div class="d-flex align-items-center">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-                <label class="form-check-label" for="checkbox-all">
-                    Chọn tất cả
-                </label>
+
+        <form name="container-form" action="/game/handle-form-action" method="get">
+            <div class="my-title">
+            <h3>Games Posted</h3>
+            <a href="/game/manager/trash">Trash (<%= deletedcount%>)</a>
+
+            <div class="mt-4 d-flex align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-all">
+                    <label class="form-check-label" for="check-all">
+                        Check All: <label id="labelQuantity">0</label>
+                    </label>
+                </div>
+
+                <select class="form-control form-control-sm checkbox-select-all-options ml-3 w-25" name="action"
+                    required>
+                    <option value="">--Action--</option>
+                    <option value="delete">Delete</option>
+                </select>
+
+                <button class="btn btn-primary btn-sm btn-submit ml-3" disabled>Submit</button>
             </div>
-
-            <select class="form-control form-control-sm checkbox-select-all-options ml-3 w-25" name="action" required>
-                <option value="">--Chọn hành động--</option>
-                <option value="delete">Xóa</option>
-            </select>
-
-            <button class="btn btn-primary btn-sm btn-submit ml-3" disabled>Thực hiện</button>
         </div>
-    </div>
 
         <div class="container-fluid">
             <table class="table table-hover table-bordered mt-3 mb-5">
                 <thead class="thead-light">
                     <tr>
+                        <th></th>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>
@@ -61,12 +64,16 @@
                         <th scope="col">Download</th>
                         <th scope="col">CreatedAt</th>
                         <th scope="col">UpdatedAt</th>
-                        <th colspan="2"></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for(let i=0; i < data.length; i++) { %>
                         <tr>
+                            <td>
+                                <input type="checkbox" value="<%=data[i]._id%>" name="gameIds[]">
+                            </td>
                             <td>
                                 <%= i+1 %>
                             </td>
@@ -105,21 +112,67 @@
                             </td>
                             <td><a href="/game/delete?id=<%=data[i]._id%>" class="btn-delete"> Xóa </a></td>
                         </tr>
-                    <% } %>
+                        <% } %>
                 </tbody>
             </table>
         </div>
+        </form>
 
+         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var checkAll = $('#check-all')
+                var btnSubmit = $('.btn-submit')
+                var gameItemCheckbox = $('input[name="gameIds[]"]')
+                var selectOption = document.querySelector('.checkbox-select-all-options')
+                var container_form = document.forms['container-form']
+                var labelQuantity = document.getElementById('labelQuantity');
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+                //kiểm tra checkall
+                checkAll.change(function () {
+                    var isChecked = $(this).prop('checked')
+                    gameItemCheckbox.prop('checked', isChecked)
+                    renderSubmitBtn()
+                    checkedQuantity()
+                })
+
+                //kiểm tra check trên từng checkbox
+                gameItemCheckbox.change(function () {
+                    var countCheck = gameItemCheckbox.length === $('input[name="gameIds[]"]:checked').length
+                    if (countCheck) {
+                        checkAll.prop('checked', true)
+                    } else {
+                        checkAll.prop('checked', false)
+                    }
+                    renderSubmitBtn()
+                    checkedQuantity()
+                })
+
+                //enable nút submit
+                var renderSubmitBtn = () =>{
+                    var checkedCount = $('input[name="gameIds[]"]:checked').length;
+                    if(checkedCount>0){
+                        btnSubmit.attr('disabled', false)
+                    }else{
+                        btnSubmit.attr('disabled', true)
+                    }
+                }
+
+                //lấy số lượng thẻ bị check show ra
+                var checkedQuantity = () =>{
+                    labelQuantity.innerText = $('input[name="gameIds[]"]:checked').length;
+                }
+            })
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
