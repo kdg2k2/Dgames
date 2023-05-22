@@ -22,8 +22,7 @@ const GameSchema = new Schema(
 		timestamps: true,
 	}
 );
-
-
+GameSchema.index({title: 'text', category: 'text', developerInfo: 'text', language: 'text', os: 'text'});
 
 const mongoose_delete = require('mongoose-delete');
 GameSchema.plugin(mongoose_delete, {

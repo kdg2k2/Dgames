@@ -7,6 +7,7 @@ let router = express.Router();
 
 let initWebRoutes=(app)=>{
     router.get('/', homeControllers.getHomepage)//trang chủ
+    router.get('/search', homeControllers.search)
 
     //--------------User space---------------
     //Login
