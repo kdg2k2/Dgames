@@ -1,14 +1,9 @@
-//responsive
-@media (max-width: 1090px){
-  .content, .discord{
-    display: none;
-  }
-
+//homePage
 @media (max-width: 991px) {
   .col-4, .col-3 {
     flex: 0 0 50%;
     max-width: 50%;
-  }
+  } 
 }
 
 @media (max-width: 576px) {
@@ -18,136 +13,143 @@
   }
 }
 
-.main {
+.home-card-game{
+  border-radius: 20px;
+}
+
+.home-img-game{
+  border-radius: 20px 20px 0 0;
+}
+
+//trang show game
+@media (max-width: 1090px){
+  .content, .discord{
+    display: none;
+  }
+
+  .main {
     flex-basis: 100%;
     max-width: 100%;
   }
 }
 
 body{
-    background-image: url('/image/homeBackground.jpg');
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+  background-image: url('/image/homeBackground.jpg');
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .avatar{
-    display: block;
-    width: 100%;
-    height: 500px;
-    border-radius: 10px;
+  display: block;
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
 }
 
 .description{
-    background-color: #f4e1bd;
-    border-radius: 10px;
-    padding: 15px;
+  background-color: #f4e1bd;
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .info, .download{
-    background-color: #cce5ff;
-    border-radius: 10px;
-    padding: 15px;
+  background-color: #cce5ff;
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .main{
-    background-color: #fff;
-    border-radius: 20px;
-    margin-right: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin-right: 30px;
 }
 
 .content{
-    background: #fff;
-    width: 321px;
-    height: 150px;
-    border-radius: 20px;
+  background: #fff;
+  width: 321px;
+  height: 150px;
+  border-radius: 20px;
 }
 
 .discord{
-    background: #fff;
-    width: 321px;
-    height: 365px;
-    border-radius: 20px;
+  background: #fff;
+  width: 321px;
+  height: 365px;
+  border-radius: 20px;
 }
 
 .FB, .DC{
-    width: 300px;
-    height: 50px;
-    line-height: 150px;
-    margin-top: 18px;
-    margin-left: 10px;
-}
-
-.discord-iframe{
-  margin-top: 15px;
+  width: 300px;
+  height: 50px;
+  line-height: 150px;
+  margin-top: 18px;
   margin-left: 10px;
 }
 
-.footer{
-    color: #fff;
-}
-
-.nav-link:hover{
-    color: #E8D426;
+.discord-iframe{
+margin-top: 15px;
+margin-left: 10px;
 }
 
 a:hover{
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .screen-shot {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 3rem; /* Khoảng cách dưới */
-  }
-  
-  .image-container {
-    width: 60%;
-    height: auto;
-    overflow: hidden;
-  }
-  
-  .large-img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .thumbnail-wrapper {
-    width: 100%;
-    max-width: 60%;
-    height: 100px;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-top: 10px;
-  }
-  
-  .screenshot-img {
-    display: inline-block;
-    width: auto;
-    height: 100%;
-  }
-  
-  .thumbnail-wrapper::-webkit-scrollbar {
-    height: 8px;
-  }
-  
-  .thumbnail-wrapper::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
-  }
-  
-  .thumbnail-wrapper::-webkit-scrollbar-track {
-    background-color: #f2f2f2;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 3rem; /* Khoảng cách dưới */
+}
 
-  .home-card-game{
-    border-radius: 20px;
-  }
+.image-container {
+  width: 60%;
+  height: auto;
+  overflow: hidden;
+}
 
-  .home-img-game{
-    border-radius: 20px 20px 0 0;
-  }
+.large-img {
+  width: 100%;
+  height: auto;
+}
+
+.thumbnail-wrapper {
+  width: 100%;
+  max-width: 60%;
+  height: 100px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-top: 10px;
+}
+
+.screenshot-img {
+  display: inline-block;
+  width: auto;
+  height: 100%;
+}
+
+.thumbnail-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.thumbnail-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.thumbnail-wrapper::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+}
+
+//Footer
+.footer{
+  color: #fff;
+}
+
+.nav-link:hover{
+  color: #E8D426;
+}

@@ -1,19 +1,23 @@
 @charset "UTF-8";
-@media (max-width: 1090px) {
-  .content, .discord {
-    display: none; } }
-
-@media (max-width: 1090px) and (max-width: 991px) {
+@media (max-width: 991px) {
   .col-4, .col-3 {
     flex: 0 0 50%;
     max-width: 50%; } }
 
-@media (max-width: 1090px) and (max-width: 576px) {
+@media (max-width: 576px) {
   .col-4, .col-3 {
     flex: 0 0 100%;
     max-width: 100%; } }
 
+.home-card-game {
+  border-radius: 20px; }
+
+.home-img-game {
+  border-radius: 20px 20px 0 0; }
+
 @media (max-width: 1090px) {
+  .content, .discord {
+    display: none; }
   .main {
     flex-basis: 100%;
     max-width: 100%; } }
@@ -69,12 +73,6 @@ body {
   margin-top: 15px;
   margin-left: 10px; }
 
-.footer {
-  color: #fff; }
-
-.nav-link:hover {
-  color: #E8D426; }
-
 a:hover {
   text-decoration: none; }
 
@@ -119,8 +117,8 @@ a:hover {
 .thumbnail-wrapper::-webkit-scrollbar-track {
   background-color: #f2f2f2; }
 
-.home-card-game {
-  border-radius: 20px; }
+.footer {
+  color: #fff; }
 
-.home-img-game {
-  border-radius: 20px 20px 0 0; }
+.nav-link:hover {
+  color: #E8D426; }
