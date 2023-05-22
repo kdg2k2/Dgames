@@ -45,20 +45,22 @@ let postNewUser = (req, res, next) => {
 			if (username) {
 				res.send('User already exists');
 			} else {
-				User.findOne({ email: md5(req.body.email) }).then((email) => {
-					if (email) {
-						res.send('Email already exists');
-					} else {
-						const user = new User(req.body);
-						user.email = md5(req.body.email);
-						user.password = md5(req.body.password);
-						user.save()
-							.then(() => {
-								res.redirect('/login');
-							})
-							.catch(next);
-					}
-				});
+				User.findOne({ email: md5(req.body.email) })
+					.then((email) => {
+						if (email) {
+							res.send('Email already exists');
+						} else {
+							const user = new User(req.body);
+							user.email = md5(req.body.email);
+							user.password = md5(req.body.password);
+							user.save()
+								.then(() => {
+									res.redirect('/login');
+								})
+								.catch(next);
+						}
+					})
+					.catch(next);
 			}
 		})
 		.catch(next);
@@ -68,6 +70,34 @@ let logout = (req, res) => {
 	res.redirect('/');
 };
 
+let forgetPassword = (req, res) => {
+	res.render('pages/forgetPassword/forgetPassword.ejs')
+}
+
+let changePassword = (req, res, next) => {
+	User.findOne({ username: req.body.username })
+		.then((username) => {
+			if (!username) {
+				res.send('User not found');
+			} else {
+				User.findOne({ email: md5(req.body.email) })
+				.then((email) => {
+					if (!email) {
+						res.send('Email not found');
+					} else {
+						req.body.password = md5(req.body.password);
+						req.body.email = md5(req.body.email);
+						User.updateOne({username: req.body.username}, req.body)
+							.then(()=>res.redirect('back'))
+							.catch(next);
+					}
+				})
+				.catch(next);
+			}
+		})
+		.catch(next);
+}
+
 module.exports = {
 	loginForm,
 	loginSuccess,
@@ -75,4 +105,6 @@ module.exports = {
 	registerForm,
 	postNewUser,
 	logout,
+	forgetPassword,
+	changePassword,
 };

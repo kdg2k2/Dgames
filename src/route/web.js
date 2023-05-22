@@ -18,6 +18,10 @@ let initWebRoutes=(app)=>{
     router.get('/user/register', userControllers.registerForm)//render trang register
     router.post('/user/register-new-user', userControllers.postNewUser)//post new user
 
+    //Forget password
+    router.get('/user/forget-password', userControllers.forgetPassword)
+    router.post('/user/change-password', userControllers.changePassword)
+
     //logOut
     router.get('/logout', userControllers.logout)
 
