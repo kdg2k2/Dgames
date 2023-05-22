@@ -17,7 +17,9 @@ let loginSuccess = (req, res, next) => {
 							res.send('Wrong password');
 						} else {
 							Game.find({}).then((data) => {
-								res.render('pages/admin/adminHomePage.ejs', { data });
+								res.render('pages/admin/adminHomePage.ejs', {
+									data,
+								});
 							});
 						}
 					})
@@ -38,12 +40,26 @@ let registerForm = (req, res, next) => {
 	res.render('pages/register/register.ejs');
 };
 let postNewUser = (req, res, next) => {
-	const user = new User(req.body);
-	user.email = md5(req.body.email);
-	user.password = md5(req.body.password);
-	user.save()
-		.then(() => {
-			res.redirect('/login');
+	User.findOne({ username: req.body.username })
+		.then((username) => {
+			if (username) {
+				res.send('User already exists');
+			} else {
+				User.findOne({ email: md5(req.body.email) }).then((email) => {
+					if (email) {
+						res.send('Email already exists');
+					} else {
+						const user = new User(req.body);
+						user.email = md5(req.body.email);
+						user.password = md5(req.body.password);
+						user.save()
+							.then(() => {
+								res.redirect('/login');
+							})
+							.catch(next);
+					}
+				});
+			}
 		})
 		.catch(next);
 };
