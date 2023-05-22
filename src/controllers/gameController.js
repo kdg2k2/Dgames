@@ -5,13 +5,13 @@ import Game from '../models/Game';
 let gameManager = (req, res, next) => {
 	Promise.all([Game.find({}), Game.countDocumentsDeleted()]).then(
 		([data, deletedcount]) => {
-			res.render('pages/gameManager.ejs', { data, deletedcount });
+			res.render('pages/admin/postedManager.ejs', { data, deletedcount });
 		}
 	);
 };
 let gameManager_trash = (req, res, next) => {
 	Game.findDeleted({})
-		.then((data) => res.render('pages/trash-Game.ejs', { data }))
+		.then((data) => res.render('pages/admin/deletedManager.ejs', { data }))
 		.catch(next);
 };
 //----------------------
@@ -21,7 +21,7 @@ let gameManager_trash = (req, res, next) => {
 let showGame = (req, res, next) => {
 	Game.findOne({ slug: req.params.slug })
 		.then((data) => {
-			res.render('pages/showGame.ejs', { data });
+			res.render('pages/game/showGame.ejs', { data });
 		})
 		.catch(next);
 }; //----------------------
@@ -29,7 +29,7 @@ let showGame = (req, res, next) => {
 //----------------------
 //render trang tạo Game
 let createGame = (req, res) => {
-	return res.render('pages/createGames.ejs');
+	return res.render('pages/game/createGames.ejs');
 };
 //đẩy dữ liệu đc nhập lên server
 let postNewGame = (req, res, next) => {
@@ -48,7 +48,7 @@ let postNewGame = (req, res, next) => {
 let editGame = (req, res, next) => {
 	Game.findOne({ _id: req.query.id })
 		.then((data) => {
-			res.render('pages/editGame.ejs', { data });
+			res.render('pages/game/editGame.ejs', { data });
 		})
 		.catch(next);
 };

@@ -3,7 +3,7 @@ import Game from '../models/Game';
 import md5 from 'md5';
 
 let loginForm = (req, res, next) => {
-	res.render('pages/login.ejs');
+	res.render('pages/login/login.ejs');
 };
 let loginSuccess = (req, res, next) => {
 	User.findOne({ username: req.body.username })
@@ -17,7 +17,7 @@ let loginSuccess = (req, res, next) => {
 							res.send('Wrong password');
 						} else {
 							Game.find({}).then((data) => {
-								res.render('pages/adminPage.ejs', { data });
+								res.render('pages/admin/adminHomePage.ejs', { data });
 							});
 						}
 					})
@@ -29,13 +29,13 @@ let loginSuccess = (req, res, next) => {
 let logged = (req, res, next) => {
 	Game.find({})
 		.then((data) => {
-			res.render('pages/adminPage.ejs', { data });
+			res.render('pages/admin/adminHomePage.ejs', { data });
 		})
 		.catch(next);
 };
 
 let registerForm = (req, res, next) => {
-	res.render('pages/register.ejs');
+	res.render('pages/register/register.ejs');
 };
 let postNewUser = (req, res, next) => {
 	const user = new User(req.body);
