@@ -24,15 +24,14 @@ let initWebRoutes=(app)=>{
 
     //logOut
     router.get('/logout', userControllers.logout)
-
+    
+    //read
+    router.get('/game/manager', userControllers.gameManager)//trang quản lý bài đăng
+    router.get('/game/manager/trash', userControllers.gameManager_trash)//trang quản lý bài đăng đã xóa
 
     //-------------Game Route Space----------------
-    //read
-    router.get('/game/manager', gameControllers.gameManager)//trang quản lý bài đăng
-    router.get('/game/manager/trash', gameControllers.gameManager_trash)//trang quản lý bài đăng đã xóa
-
     //create
-    router.get('/game/create', gameControllers.createGame)//tạo bài viết mới
+    router.get('/game/create', userControllers.createGame)//tạo bài viết mới
     router.post('/post-new-game', gameControllers.postNewGame)//đẩy viết mới mới lên server
 
     //edit
