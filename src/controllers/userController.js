@@ -34,6 +34,8 @@ let loginSuccess = (req, res, next) => {
 							} else {
 								// Gửi JWT về cho người dùng
 								res.cookie('token', token); // Lưu JWT trong cookie (Cần cài đặt middleware cookie-parser)
+								// Xác định người dùng đã đăng nhập thành công
+								req.session.loggedIn = true;
 								Game.find({})
 									.then((data) => {
 										res.render(
@@ -72,6 +74,8 @@ let logged = (req, res, next) => {
 };
 
 let logout = (req, res) => {
+	// Xác định người dùng đã đăng xuất
+	req.session.loggedIn = false;
 	res.clearCookie('token'); // Xóa cookie chứa JWT (Cần cài đặt middleware cookie-parser)
 	res.redirect('/');
 };
@@ -204,6 +208,15 @@ let createGame = (req, res) => {
 	});
 };
 
+//show ra nội dung khi click vào
+let showGame = (req, res, next) => {
+	Game.findOne({ slug: req.params.slug })
+		.then((data) => {
+			res.render('pages/game/showGame.ejs', { data });
+		})
+		.catch(next);
+}; //----------------------
+
 module.exports = {
 	loginForm,
 	loginSuccess,
@@ -216,4 +229,5 @@ module.exports = {
 	gameManager,
 	gameManager_trash,
 	createGame,
+	showGame,
 };

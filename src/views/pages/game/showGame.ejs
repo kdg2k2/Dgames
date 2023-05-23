@@ -1,6 +1,12 @@
 <body>
     <%- include('../../partials/head') %>
+    <% if (loggedIn) { %>
+        <!-- Header của admin -->
+        <%- include('../../partials/adminHeader') %>
+      <% } else { %>
+        <!-- Header thường -->
         <%- include('../../partials/header') %>
+      <% } %>
 
             <div class="main-show mt-4">
                 <div class="container">
@@ -154,4 +160,10 @@
 
                 </script>
 </body>
-<%- include('../../partials/footer') %>
+<% if (loggedIn) { %>
+    <!-- Header của admin -->
+    <%- include('../../partials/adminFooter') %>
+  <% } else { %>
+    <!-- Header thường -->
+    <%- include('../../partials/footer') %>
+  <% } %>

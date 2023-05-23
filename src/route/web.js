@@ -50,7 +50,7 @@ let initWebRoutes=(app)=>{
     router.get('/game/handle-form-action', gameControllers.handleFormAction)
 
     //slug
-    router.get('/:slug', gameControllers.showGame)//show viết mới khi click vào 1 viết mới trong trang chủ
+    router.get('/:slug', userControllers.showGame)//show viết mới khi click vào 1 viết mới trong trang chủ
     
     return app.use('/', router)
 }

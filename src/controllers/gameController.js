@@ -1,15 +1,6 @@
 import Game from '../models/Game';
 
 //----------------------
-//show ra nội dung khi click vào
-let showGame = (req, res, next) => {
-	Game.findOne({ slug: req.params.slug })
-		.then((data) => {
-			res.render('pages/game/showGame.ejs', { data });
-		})
-		.catch(next);
-}; //----------------------
-
 //POST dữ liệu tại trang create đc nhập lên server
 let postNewGame = (req, res, next) => {
 	const game = new Game(req.body);
@@ -130,7 +121,6 @@ let handleFormAction = (req, res, next) => {
 
 module.exports = {
 	postNewGame,
-	showGame,
 	editGame,
 	putUpdatedGame,
 	deleteGame,

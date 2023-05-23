@@ -6,6 +6,7 @@ require('dotenv').config();
 const db = require('./config/connectDB');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 let app = express();
 
@@ -14,6 +15,19 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Cấu hình session
+app.use(session({
+    secret: 'DGAMES',
+    resave: false,
+    saveUninitialized: true
+  }));
+  
+  // Middleware để xác định trạng thái xác thực của người dùng
+  app.use((req, res, next) => {
+    res.locals.loggedIn = req.session.loggedIn || false;
+    next();
+  });
 
 
 viewEngine(app);
