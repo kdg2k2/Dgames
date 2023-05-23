@@ -9,13 +9,13 @@
               <div class="col-4 col-3">
                 <div class="card mt-4 home-card-game">
                   <a href="/<%= reversedData[i].slug %>">
-                    <img style="height: 300px;" class="card-img-top home-img-game" src="<%= reversedData[i].image %>">
+                    <img style="height: 300px;" class="card-img-top home-img-game" src="<%= reversedData[i].image %>"></a>
                     <div class="card-body">
                       <h5 class="card-title">
-                        <%= reversedData[i].title %>
+                        <a href="/<%= reversedData[i].slug %>"><%= reversedData[i].title %></a>
                       </h5>
                     </div>
-                  </a>
+                  
                 </div>
               </div>
               <% } %>

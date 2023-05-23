@@ -22,19 +22,27 @@
                             <h5>INFO</h5>
                             <div class="info mb-3">
                                 <p><strong>Category:</strong>
-                                    <%=data.category%>
+                                    <% data.category.forEach(function(category) { %>
+                                        <a href="/search?search=<%= category %>"><%= category %></a>✔ 
+                                        <% }); %>
                                 </p>
                                 <p><strong>Developer:</strong>
-                                    <%=data.developerInfo%>
+                                    <% data.developerInfo.forEach(function(developerInfo) { %>
+                                        <a href="/search?search=<%= developerInfo %>"><%= developerInfo %>✔</a>
+                                        <% }); %>
                                 </p>
                                 <p><strong>Version:</strong>
                                     <%=data.version%>
                                 </p>
                                 <p><strong>OS:</strong>
-                                    <%=data.os%>
+                                    <% data.os.forEach(function(os) { %>
+                                        <a href="/search?search=<%= os %>"><%= os %>✔</a>
+                                        <% }); %>
                                 </p>
                                 <p><strong>Languages:</strong>
-                                    <%=data.language%>
+                                    <% data.language.forEach(function(language) { %>
+                                        <a href="/search?search=<%= language %>"><%= language %>✔</a>
+                                        <% }); %>
                                 </p>
                             </div>
 
@@ -52,7 +60,7 @@
 
                             <h5>DOWNLOAD</h5>
                             <div class="download mb-5">
-                                <p><strong>Windows: </strong><a href="<%=data.downloadLink%>">Link</a></p>
+                                <p><strong>Windows: </strong><a class="downloadLink" href="<%=data.downloadLink%>">Link</a></p>
                             </div>
 
                         </div>

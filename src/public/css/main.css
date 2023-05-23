@@ -45,6 +45,12 @@ body {
   border-radius: 10px;
   padding: 15px; }
 
+.downloadLink {
+  color: #E84E89; }
+
+.downloadLink:hover {
+  color: #b3094a; }
+
 .main {
   background-color: #fff;
   border-radius: 20px;
@@ -73,8 +79,12 @@ body {
   margin-top: 15px;
   margin-left: 10px; }
 
+a {
+  color: #333; }
+
 a:hover {
-  text-decoration: none; }
+  text-decoration: none;
+  color: #004085; }
 
 .screen-shot {
   display: flex;

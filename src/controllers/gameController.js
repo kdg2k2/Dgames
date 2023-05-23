@@ -13,9 +13,30 @@ let showGame = (req, res, next) => {
 //POST dữ liệu tại trang create đc nhập lên server
 let postNewGame = (req, res, next) => {
 	const game = new Game(req.body);
+	game.category = req.body.category
+		.split('\n')
+		.map((category) => category.trim());
+
+	game.developerInfo = req.body.developerInfo
+		.split('\n')
+		.map((developerInfo) => developerInfo.trim());
+
+	game.os = req.body.os
+		.split('\n')
+		.map((os) => os.trim());
+
+	game.downloadLink = req.body.downloadLink
+		.split('\n')
+		.map((downloadLink) => downloadLink.trim());
+
+	game.language = req.body.language
+		.split('\n')
+		.map((language) => language.trim());
+
 	game.screenshots = req.body.screenshots
 		.split('\n')
 		.map((screenshot) => screenshot.trim());
+
 	game.save()
 		.then(() => res.redirect('/game/manager'))
 		.catch(next);
@@ -32,10 +53,36 @@ let editGame = (req, res, next) => {
 		.catch(next);
 };
 let putUpdatedGame = async (req, res, next) => {
+	const category = req.body.category
+		.split('\n')
+		.map((category) => category.trim());
+	req.body.category = category;
+
+	const developerInfo = req.body.developerInfo
+		.split('\n')
+		.map((developerInfo) => developerInfo.trim());
+	req.body.developerInfo = developerInfo;
+
+	const os = req.body.os
+		.split('\n')
+		.map((os) => os.trim());
+	req.body.os = os;
+
+	const downloadLink = req.body.downloadLink
+		.split('\n')
+		.map((downloadLink) => downloadLink.trim());
+	req.body.downloadLink = downloadLink;
+
+	const language = req.body.language
+		.split('\n')
+		.map((language) => language.trim());
+	req.body.language = language;
+
 	const screenshots = req.body.screenshots
 		.split('\n')
 		.map((screenshot) => screenshot.trim());
 	req.body.screenshots = screenshots;
+
 	await Game.updateOne({ _id: req.body._id }, req.body);
 	res.redirect('/game/manager');
 };
