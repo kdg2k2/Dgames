@@ -4,9 +4,11 @@ import viewEngine from './config/viewEngine';
 import initWebroutes from './route/web';
 require('dotenv').config();
 const db = require('./config/connectDB');
+const methodOverride = require('method-override');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+
 
 let app = express();
 
@@ -14,6 +16,7 @@ let app = express();
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(cookieParser());
 
 // Cấu hình session

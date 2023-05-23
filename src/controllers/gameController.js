@@ -29,7 +29,7 @@ let postNewGame = (req, res, next) => {
 		.map((screenshot) => screenshot.trim());
 
 	game.save()
-		.then(() => res.redirect('/game/manager'))
+		.then(() => res.redirect('/game'))
 		.catch(next);
 	// res.send(game);
 }; //----------------------
@@ -37,13 +37,13 @@ let postNewGame = (req, res, next) => {
 //----------------------
 //render trang chỉnh sửa game
 let editGame = (req, res, next) => {
-	Game.findOne({ _id: req.query.id })
+	Game.findOne({ _id: req.params.id })
 		.then((data) => {
 			res.render('pages/game/editGame.ejs', { data });
 		})
 		.catch(next);
 };
-let putUpdatedGame = async (req, res, next) => {
+let putUpdatedGame = (req, res, next) => {
 	const category = req.body.category
 		.split('\n')
 		.map((category) => category.trim());
@@ -74,41 +74,43 @@ let putUpdatedGame = async (req, res, next) => {
 		.map((screenshot) => screenshot.trim());
 	req.body.screenshots = screenshots;
 
-	await Game.updateOne({ _id: req.body._id }, req.body);
-	res.redirect('/game/manager');
+	Game.updateOne({ _id: req.params.id }, req.body)
+		.then(()=> res.redirect('/game'))
+		.catch(next)
 };
 
-let deleteGame = (req, res, next) => {
-	Game.delete({ _id: req.query.id })
-		.then(() => res.redirect('/game/manager'))
-		.catch(next);
-};
+let moveToTrash = (req, res, next) => {
+	Game.delete({ _id: req.params.id })
+	.then(() => res.redirect('back'))
+	.catch(next);
+}
+
 let forceDelete = (req, res, next) => {
-	Game.deleteOne({ _id: req.query.id })
+	Game.deleteOne({ _id: req.params.id })
 		.then(() => res.redirect('back'))
 		.catch(next);
 };
 
 let restoreGame = (req, res, next) => {
-	Game.restore({ _id: req.query.id })
+	Game.restore({ _id: req.params.id })
 		.then(() => res.redirect('back'))
 		.catch(next);
 };
 
 let handleFormAction = (req, res, next) => {
-	switch (req.query.action) {
+	switch (req.body.action) {
 		case 'delete':
-			Game.delete({ _id: { $in: req.query.gameIds } })
-				.then(() => res.redirect('/game/manager'))
+			Game.delete({ _id: { $in: req.body.gameIds } })
+				.then(() => res.redirect('/game'))
 				.catch(next);
 			break;
 		case 'restore':
-			Game.restore({ _id: { $in: req.query.gameIds } })
+			Game.restore({ _id: { $in: req.body.gameIds } })
 				.then(() => res.redirect('back'))
 				.catch(next);
 			break;
 		case 'force-delete':
-			Game.deleteOne({ _id: { $in: req.query.gameIds } })
+			Game.deleteOne({ _id: { $in: req.body.gameIds } })
 				.then(() => res.redirect('back'))
 				.catch(next);
 			break;
@@ -123,7 +125,7 @@ module.exports = {
 	postNewGame,
 	editGame,
 	putUpdatedGame,
-	deleteGame,
+	moveToTrash,
 	forceDelete,
 	restoreGame,
 	handleFormAction,

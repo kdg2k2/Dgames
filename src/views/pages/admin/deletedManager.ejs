@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-    <title>Trash Game Manager</title>
+    <title>Game Manager</title>
 
     <style>
         h1 {
@@ -25,10 +25,10 @@
 <body>
     <%- include('../../partials/adminHeader') %>
 
-        <form name="container-form" action="/game/handle-form-action" method="get">
+        <form name="container-form" action="/game/handle-form-action" method="post">
             <div class="my-title">
-                <h3>Trash</h3>
-                <a href="/game/manager">Back</a>
+                <h3>Deleted Post</h3>
+                <a href="/game">Back</a>
 
                 <div class="mt-4 d-flex align-items-center">
                     <div class="form-check">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="container-fuild">
+            <div class="container-fluid">
                 <table class="table table-hover table-bordered mt-3 mb-5">
                     <thead class="thead-light">
                         <tr>
@@ -69,57 +69,109 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(let i=0; i < data.length; i++) { %>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" value="<%=data[i]._id%>" name="gameIds[]">
-                                </td>
-                                <td>
-                                    <%=i+1%>
-                                </td>
-                                <td>
-                                    <%= data[i].title %>
-                                </td>
-                                <td>
-                                    <%= data[i].description %>
-                                </td>
-                                <td>
-                                    <%= data[i].category %>
-                                </td>
-                                <td>
-                                    <%= data[i].developerInfo %>
-                                </td>
-                                <td>
-                                    <%= data[i].version %>
-                                </td>
-                                <td>
-                                    <%= data[i].os %>
-                                </td>
-                                <td>
-                                    <%= data[i].language %>
-                                </td>
-                                <td>
-                                    <%= data[i].downloadLink %>
-                                </td>
-                                <td>
-                                    <%= data[i].deletedAt %>
-                                </td>
-                                <td>
-                                    <a href="/game/restore?id=<%=data[i]._id%>" class="btn-restore">Khôi Phục</a>
-                                </td>
-                                <td><a href="/game/force-delete?id=<%=data[i]._id%>" class="btn-force-delete"> Xóa vĩnh
-                                        viễn
-                                    </a>
-                                </td>
-                            </tr>
-                            <% } %>
+                        <% var reversedData=data.slice().reverse(); %>
+                            <% for(let i=0; i < reversedData.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="<%= reversedData[i]._id %>" name="gameIds[]">
+                                    </td>
+                                    <td>
+                                        <%= i + 1 %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].title %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].description %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].category %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].developerInfo %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].version %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].os %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].language %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].downloadLink %>
+                                    </td>
+                                    <td>
+                                        <%= reversedData[i].deletedAt %>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-restore" data-id="<%= reversedData[i]._id %>">Restore</a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-delete" data-id="<%= reversedData[i]._id %>"
+                                            data-toggle="modal" data-target="#delete-game-model">Force Delete</a>
+                                    </td>
+                                </tr>
+                                <% } %>
                     </tbody>
+
                 </table>
             </div>
         </form>
 
+        <!-- conform delete -->
+        <div id="delete-game-model" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-delete-game" type="button" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- form ẩn -->
+        <form name="delete-game-form" method="POST"></form>
+        <form name="restore-game-form" method="POST"></form>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                var id;
+                var deleteForm = document.forms['delete-game-form'];
+                var btnDelete = document.querySelector('.btn-delete');
+
+                //lấy id để xóa
+                $('#delete-game-model').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget)
+                    id = button.data('id')
+                })
+
+                //xóa id
+                var btn_delete_course = document.getElementById('btn-delete-game')
+                btn_delete_course.onclick = function () {
+                    deleteForm.action = '/game/' + id + '/force-delete?_method=DELETE'
+                    deleteForm.submit()
+                }
+
+                var restoreForm = document.forms['restore-game-form'];
+                var restoreBtn = document.querySelector('.btn-restore')
+                restoreBtn.onclick = function (e) {
+                    e.preventDefault()
+                    restoreForm.action = '/game/' + restoreBtn.dataset.id + '/restore?_method=PATCH'
+                    restoreForm.submit()
+                }
+
                 var checkAll = $('#check-all')
                 var btnSubmit = $('.btn-submit')
                 var gameItemCheckbox = $('input[name="gameIds[]"]')

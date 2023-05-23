@@ -1,6 +1,12 @@
+<%- include('../../partials/head') %>
 <body>
-  <%- include('../../partials/head') %>
-    <%- include('../../partials/header') %>
+  <% if (loggedIn) { %>
+      <!-- Header của admin -->
+      <%- include('../../partials/adminHeader') %>
+    <% } else { %>
+      <!-- Header thường -->
+      <%- include('../../partials/header') %>
+    <% } %>
 
       <div class="container">
         <div class="row">
@@ -35,4 +41,10 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
-<%- include('../../partials/footer') %>
+<% if (loggedIn) { %>
+  <!-- Header của admin -->
+  <%- include('../../partials/adminFooter') %>
+<% } else { %>
+  <!-- Header thường -->
+  <%- include('../../partials/footer') %>
+<% } %>

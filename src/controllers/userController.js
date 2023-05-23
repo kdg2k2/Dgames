@@ -36,14 +36,7 @@ let loginSuccess = (req, res, next) => {
 								res.cookie('token', token); // Lưu JWT trong cookie (Cần cài đặt middleware cookie-parser)
 								// Xác định người dùng đã đăng nhập thành công
 								req.session.loggedIn = true;
-								Game.find({})
-									.then((data) => {
-										res.render(
-											'pages/admin/adminHomePage.ejs',
-											{ data }
-										);
-									})
-									.catch(next);
+								res.redirect('/user')
 							}
 						}
 					);
@@ -66,7 +59,7 @@ let logged = (req, res, next) => {
 			// JWT hợp lệ, tiếp tục xử lý yêu cầu
 			Game.find({})
 				.then((data) => {
-					res.render('pages/admin/adminHomePage.ejs', { data });
+					res.render('pages/home/homePage.ejs', { data });
 				})
 				.catch(next);
 		}
@@ -217,6 +210,29 @@ let showGame = (req, res, next) => {
 		.catch(next);
 }; //----------------------
 
+
+let search = (req, res, next) => {
+	const searchTerm = req.query.search;
+	if(searchTerm){
+		const regex = new RegExp(searchTerm, 'i'); // 'i' để tìm kiếm không phân biệt chữ hoa chữ thường
+	
+	Game.find({
+	  $or: [
+		{ title: { $regex: regex } },
+		{ category: { $regex: regex } },
+		{ developerInfo: { $regex: regex } },
+		{ os: { $regex: regex } },
+		{ language: { $regex: regex } }
+	  ]
+	})
+	  .then((data) => res.render('pages/home/searching.ejs', { data , searchTerm}))
+	  .catch(next);
+	}
+	else{
+		res.send('Null search')
+	}
+  };
+
 module.exports = {
 	loginForm,
 	loginSuccess,
@@ -230,4 +246,5 @@ module.exports = {
 	gameManager_trash,
 	createGame,
 	showGame,
+	search,
 };

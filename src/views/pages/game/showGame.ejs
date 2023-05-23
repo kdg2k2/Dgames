@@ -1,169 +1,227 @@
-<body>
-    <%- include('../../partials/head') %>
-    <% if (loggedIn) { %>
-        <!-- Header của admin -->
-        <%- include('../../partials/adminHeader') %>
-      <% } else { %>
-        <!-- Header thường -->
-        <%- include('../../partials/header') %>
-      <% } %>
+<%- include('../../partials/head') %>
 
-            <div class="main-show mt-4">
-                <div class="container">
-                    <div class="row">
-                        <div class="main col-8">
-                            <img class="avatar mt-3" src="<%=data.image%>">
+    <body>
+        <% if (loggedIn) { %>
+            <!-- Header của admin -->
+            <%- include('../../partials/adminHeader') %>
+                <% } else { %>
+                    <!-- Header thường -->
+                    <%- include('../../partials/header') %>
+                        <% } %>
 
-                            <h1 class="mt-3 mb-3">
-                                <%= data.title %>
-                            </h1>
+                            <div class="main-show mt-4">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="main col-8">
+                                            <% if (data && data.image) { %>
+                                                <img class="avatar mt-3" src="<%= data.image %>">
+                                                <% } else { %>
+                                                    <!-- Hiển thị hình ảnh mặc định nếu không có trường "image" -->
+                                                    <img class="avatar mt-3" src="/image/default-imagel.jpg">
+                                                    <% } %>
 
-                            <h5>OVERVIEW</h5>
-                            <div class="description mb-3">
-                                <p>
-                                    <%= data.description %>
-                                </p>
-                            </div>
+                                                        <% if (data && data.title) { %>
+                                                            <h1 class="mt-3 mb-3">
+                                                                <%= data.title %>
+                                                            </h1>
+                                                            <% } else { %>
+                                                                <h1 class="mt-3 mb-3">Untitled</h1>
+                                                                <% } %>
 
-                            <h5>INFO</h5>
-                            <div class="info mb-3">
-                                <p><strong>Category:</strong>
-                                    <% data.category.forEach(function(category) { %>
-                                        <a href="/search?search=<%= category %>"><%= category %></a>✔ 
-                                        <% }); %>
-                                </p>
-                                <p><strong>Developer:</strong>
-                                    <% data.developerInfo.forEach(function(developerInfo) { %>
-                                        <a href="/search?search=<%= developerInfo %>"><%= developerInfo %>✔</a>
-                                        <% }); %>
-                                </p>
-                                <p><strong>Version:</strong>
-                                    <%=data.version%>
-                                </p>
-                                <p><strong>OS:</strong>
-                                    <% data.os.forEach(function(os) { %>
-                                        <a href="/search?search=<%= os %>"><%= os %>✔</a>
-                                        <% }); %>
-                                </p>
-                                <p><strong>Languages:</strong>
-                                    <% data.language.forEach(function(language) { %>
-                                        <a href="/search?search=<%= language %>"><%= language %>✔</a>
-                                        <% }); %>
-                                </p>
-                            </div>
+                                                                    <h5>OVERVIEW</h5>
+                                                                    <div class="description mb-3">
+                                                                        <% if (data && data.description) { %>
+                                                                            <p class="mb-3">
+                                                                                <%= data.description %>
+                                                                            </p>
+                                                                        <% } else { %>
+                                                                            <p class="mb-3">Untitled</p>
+                                                                        <% } %>
+                                                                    </div>
 
-                            <h5>SCREEN SHOT</h5>
-                            <div class="screen-shot mb-3">
-                                <div class="image-container">
-                                    <img class="large-img" src="<%= data.screenshots[0] %>">
+                                                                    <h5>INFO</h5>
+                                                                    <%if(data){%>
+                                                                    <div class="info mb-3">
+                                                                        <p><strong>Category:</strong>
+                                                                                <% data.category.forEach(function(category)
+                                                                                { %>
+                                                                                <a
+                                                                                    href="/search?search=<%= category %>">
+                                                                                    <%= category %>
+                                                                                </a>✔
+                                                                                <% }); %>
+                                                                        </p>
+                                                                        
+                                                                        <p><strong>Developer:</strong>
+                                                                            <% data.developerInfo.forEach(function(developerInfo)
+                                                                                { %>
+                                                                                <a
+                                                                                    href="/search?search=<%= developerInfo %>">
+                                                                                    <%= developerInfo %>✔
+                                                                                </a>
+                                                                                <% }); %>
+                                                                        </p>
+
+                                                                        <p><strong>Version:</strong>
+                                                                            <% if (data && data.version) { %>
+                                                                                <p class="mb-3">
+                                                                                    <%=data.version%>
+                                                                                </p>
+                                                                            <% } else { %>
+                                                                                <p class="mb-3">Untitled</p>
+                                                                            <% } %>
+                                                                        </p>
+
+                                                                        <p><strong>OS:</strong>
+                                                                            <% data.os.forEach(function(os) { %>
+                                                                                <a href="/search?search=<%= os %>">
+                                                                                    <%= os %>✔
+                                                                                </a>
+                                                                                <% }); %>
+                                                                        </p>
+
+                                                                        <p><strong>Languages:</strong>
+                                                                            <% data.language.forEach(function(language)
+                                                                                { %>
+                                                                                <a
+                                                                                    href="/search?search=<%= language %>">
+                                                                                    <%= language %>✔
+                                                                                </a>
+                                                                                <% }); %>
+                                                                        </p>
+                                                                        
+                                                                    </div>
+
+                                                                    <h5>SCREEN SHOT</h5>
+                                                                    <div class="screen-shot mb-3">
+                                                                        <div class="image-container">
+                                                                            <img class="large-img"
+                                                                                src="<%= data.screenshots[0] %>">
+                                                                        </div>
+                                                                        <div class="thumbnail-wrapper">
+                                                                            <% data.screenshots.forEach(function(screenshot)
+                                                                                { %>
+                                                                                <img class="screenshot-img"
+                                                                                    src="<%= screenshot %>">
+                                                                                <% }); %>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <h5>DOWNLOAD</h5>
+                                                                    <div class="download mb-5">
+                                                                        <p><strong>Windows: </strong>
+                                                                            <% data.downloadLink.forEach(function(downloadLink)
+                                                                                { %>
+                                                                                <a class="downloadLink"
+                                                                                    href="/search?search=<%= downloadLink %>">Link✔</a>
+                                                                                <% }); %>
+                                                                        </p>
+                                                                    </div>
+                                                                    <% } else { %>
+                                                                        <% } %>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="content">
+                                                <a href="#"><img class="FB" src="/image/FB.png" alt=""></a>
+                                                <a href="#"><img class="DC" src="/image/DC.png" alt=""></a>
+                                            </div>
+
+                                            <div class="discord mt-4">
+                                                <iframe class="discord-iframe"
+                                                    src="https://discord.com/widget?id=916226590336233492&theme=dark"
+                                                    width="300" height="335" allowtransparency="true" frameborder="0"
+                                                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="thumbnail-wrapper">
-                                    <% data.screenshots.forEach(function(screenshot) { %>
-                                        <img class="screenshot-img" src="<%= screenshot %>">
-                                        <% }); %>
-                                </div>
                             </div>
 
-                            <h5>DOWNLOAD</h5>
-                            <div class="download mb-5">
-                                <p><strong>Windows: </strong><% data.downloadLink.forEach(function(downloadLink) { %>
-                                    <a class="downloadLink" href="/search?search=<%= downloadLink %>">Link✔</a>
-                                    <% }); %></p>
-                            </div>
 
-                        </div>
+                            <script>
+                                //kéo trang tới border của header sẽ gán position fixed
+                                window.addEventListener('scroll', function () {
+                                    var element = document.querySelector('.border');
+                                    var content = document.querySelector('.content');
+                                    var discord = document.querySelector('.discord');
+                                    if (window.scrollY > element.offsetTop) {
+                                        content.style.position = 'fixed';
+                                        content.style.top = '30px';
 
-                        <div class="col-3">
-                            <div class="content">
-                                <a href="#"><img class="FB" src="/image/FB.png" alt=""></a>
-                                <a href="#"><img class="DC" src="/image/DC.png" alt=""></a>
-                            </div>
-
-                            <div class="discord mt-4">
-                                <iframe class="discord-iframe"
-                                    src="https://discord.com/widget?id=916226590336233492&theme=dark" width="300"
-                                    height="335" allowtransparency="true" frameborder="0"
-                                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-                <script>
-                    //kéo trang tới border của header sẽ gán position fixed
-                    window.addEventListener('scroll', function () {
-                        var element = document.querySelector('.border');
-                        var content = document.querySelector('.content');
-                        var discord = document.querySelector('.discord');
-                        if (window.scrollY > element.offsetTop) {
-                            content.style.position = 'fixed';
-                            content.style.top = '30px';
-
-                            discord.style.position = 'fixed';
-                            discord.style.top = '180px'
-                        } else {
-                            content.style.position = 'static';
-                            discord.style.position = 'static';
-                        }
-                    });
-
-                    // Lắng nghe sự kiện click trên ảnh nhỏ
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const smallImgs = document.querySelectorAll(".screenshot-img");
-                        const largeImg = document.querySelector(".large-img");
-                        let currentIndex = 0;
-
-                        // Hiển thị ảnh đầu tiên là ảnh mặc định
-                        largeImg.src = smallImgs[0].src;
-                        smallImgs[0].classList.add("selected");
-
-                        // Xử lý sự kiện click trên ảnh nhỏ
-                        smallImgs.forEach(function (img, index) {
-                            img.addEventListener("click", function () {
-                                // Bỏ chọn tất cả các ảnh nhỏ
-                                smallImgs.forEach(function (smallImg) {
-                                    smallImg.classList.remove("selected");
+                                        discord.style.position = 'fixed';
+                                        discord.style.top = '180px'
+                                    } else {
+                                        content.style.position = 'static';
+                                        discord.style.position = 'static';
+                                    }
                                 });
 
-                                // Chọn ảnh nhỏ được click
-                                this.classList.add("selected");
+                                // Lắng nghe sự kiện click trên ảnh nhỏ
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const smallImgs = document.querySelectorAll(".screenshot-img");
+                                    const largeImg = document.querySelector(".large-img");
+                                    let currentIndex = 0;
 
-                                // Hiển thị ảnh lớn tương ứng
-                                largeImg.src = this.src;
+                                    // Hiển thị ảnh đầu tiên là ảnh mặc định
+                                    largeImg.src = smallImgs[0].src;
+                                    smallImgs[0].classList.add("selected");
 
-                                // Cập nhật chỉ số hiện tại
-                                currentIndex = index;
-                            });
-                        });
+                                    // Xử lý sự kiện click trên ảnh nhỏ
+                                    smallImgs.forEach(function (img, index) {
+                                        img.addEventListener("click", function () {
+                                            // Bỏ chọn tất cả các ảnh nhỏ
+                                            smallImgs.forEach(function (smallImg) {
+                                                smallImg.classList.remove("selected");
+                                            });
 
-                        // Thay đổi ảnh lớn sau mỗi 5 giây
-                        setInterval(function () {
-                            currentIndex = (currentIndex + 1) % smallImgs.length;
+                                            // Chọn ảnh nhỏ được click
+                                            this.classList.add("selected");
 
-                            // Bỏ chọn tất cả các ảnh nhỏ
-                            smallImgs.forEach(function (smallImg) {
-                                smallImg.classList.remove("selected");
-                            });
+                                            // Hiển thị ảnh lớn tương ứng
+                                            largeImg.src = this.src;
 
-                            // Chọn ảnh nhỏ tương ứng với ảnh lớn
-                            smallImgs[currentIndex].classList.add("selected");
+                                            // Cập nhật chỉ số hiện tại
+                                            currentIndex = index;
+                                        });
+                                    });
 
-                            // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
-                            setTimeout(function () {
-                                largeImg.src = smallImgs[currentIndex].src;
-                            }, 500);
+                                    // Thay đổi ảnh lớn sau mỗi 5 giây
+                                    setInterval(function () {
+                                        currentIndex = (currentIndex + 1) % smallImgs.length;
 
-                        }, 5000);
-                    });
+                                        // Bỏ chọn tất cả các ảnh nhỏ
+                                        smallImgs.forEach(function (smallImg) {
+                                            smallImg.classList.remove("selected");
+                                        });
 
-                </script>
-</body>
-<% if (loggedIn) { %>
-    <!-- Header của admin -->
-    <%- include('../../partials/adminFooter') %>
-  <% } else { %>
-    <!-- Header thường -->
-    <%- include('../../partials/footer') %>
-  <% } %>
+                                        // Chọn ảnh nhỏ tương ứng với ảnh lớn
+                                        smallImgs[currentIndex].classList.add("selected");
+
+                                        // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
+                                        setTimeout(function () {
+                                            largeImg.src = smallImgs[currentIndex].src;
+                                        }, 500);
+
+                                    }, 5000);
+                                });
+
+                            </script>
+
+                            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                                crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                                crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                                crossorigin="anonymous"></script>
+    </body>
+    <% if (loggedIn) { %>
+        <!-- Header của admin -->
+        <%- include('../../partials/adminFooter') %>
+            <% } else { %>
+                <!-- Header thường -->
+                <%- include('../../partials/footer') %>
+                    <% } %>

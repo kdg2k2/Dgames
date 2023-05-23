@@ -20,7 +20,7 @@
 
 	<div class="app mt-3">
 		<div class="container">
-			<form action="/put-edited-game" method="POST">
+			<form method="POST" action="/put-edited-game/<%=data._id%>?_method=PUT" >
 				<h3>Edit Game</h3>
 				<div class="form-group">
 					<label for="title">Title</label>
