@@ -3,6 +3,7 @@
       <%- include('../../partials/header') %>
   
         <div class="container">
+            <h2 style='color: #fff;'>Searching for: <%=searchTerm%></h2>
           <div class="row">
             <% var reversedData=data.slice().reverse(); %>
               <% for(let i=0; i < reversedData.length; i++) { %>

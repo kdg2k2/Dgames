@@ -16,13 +16,12 @@ const GameSchema = new Schema(
 		language: { type: String },
 		downloadLink: { type: String },
 		slug: { type: String, slug: 'title', unique: true },
-		screenshots: [{ type: String }], // Sửa thành mảng các đường dẫn ảnh
+		screenshots: [{ type: String }], 
 	},
 	{
 		timestamps: true,
 	}
 );
-GameSchema.index({title: 'text', category: 'text', developerInfo: 'text', language: 'text', os: 'text'});
 
 const mongoose_delete = require('mongoose-delete');
 GameSchema.plugin(mongoose_delete, {
