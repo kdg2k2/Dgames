@@ -60,7 +60,9 @@
 
                             <h5>DOWNLOAD</h5>
                             <div class="download mb-5">
-                                <p><strong>Windows: </strong><a class="downloadLink" href="<%=data.downloadLink%>">Link</a></p>
+                                <p><strong>Windows: </strong><% data.downloadLink.forEach(function(downloadLink) { %>
+                                    <a class="downloadLink" href="/search?search=<%= downloadLink %>">Link✔</a>
+                                    <% }); %></p>
                             </div>
 
                         </div>
