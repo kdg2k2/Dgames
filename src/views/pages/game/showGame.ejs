@@ -141,73 +141,79 @@
     </div>
 
     <script>
-                                //kéo trang tới border của header sẽ gán position fixed
-                                window.addEventListener('scroll', function () {
-                                    var element = document.querySelector('.border');
-                                    var content = document.querySelector('.content');
-                                    var discord = document.querySelector('.discord');
-                                    if (window.scrollY > element.offsetTop) {
-                                        content.style.position = 'fixed';
-                                        content.style.top = '30px';
+        //kéo trang tới border của header sẽ gán position fixed
+        window.addEventListener('scroll', function () {
+            var element = document.querySelector('.border');
+            var content = document.querySelector('.content');
+            var discord = document.querySelector('.discord');
+            if (window.scrollY > element.offsetTop) {
+                content.style.position = 'fixed';
+                content.style.top = '30px';
 
-                                        discord.style.position = 'fixed';
-                                        discord.style.top = '180px'
-                                    } else {
-                                        content.style.position = 'static';
-                                        discord.style.position = 'static';
-                                    }
-                                });
+                discord.style.position = 'fixed';
+                discord.style.top = '180px'
+            } else {
+                content.style.position = 'static';
+                discord.style.position = 'static';
+            }
+        });
 
-                                // Lắng nghe sự kiện click trên ảnh nhỏ
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    const smallImgs = document.querySelectorAll(".screenshot-img");
-                                    const largeImg = document.querySelector(".large-img");
-                                    let currentIndex = 0;
+        // Lắng nghe sự kiện click trên ảnh nhỏ
+        document.addEventListener("DOMContentLoaded", function () {
+            const smallImgs = document.querySelectorAll(".screenshot-img");
+            const largeImg = document.querySelector(".large-img");
+            let currentIndex = 0;
+            const thumbnailsWrapper = document.querySelector('.thumbnail-wrapper');
 
-                                    // Hiển thị ảnh đầu tiên là ảnh mặc định
-                                    largeImg.src = smallImgs[0].src;
-                                    smallImgs[0].classList.add("selected");
+            // Hiển thị ảnh đầu tiên là ảnh mặc định
+            largeImg.src = smallImgs[0].src;
+            smallImgs[0].classList.add("selected");
 
-                                    // Xử lý sự kiện click trên ảnh nhỏ
-                                    smallImgs.forEach(function (img, index) {
-                                        img.addEventListener("click", function () {
-                                            // Bỏ chọn tất cả các ảnh nhỏ
-                                            smallImgs.forEach(function (smallImg) {
-                                                smallImg.classList.remove("selected");
-                                            });
+            // Xử lý sự kiện click trên ảnh nhỏ
+            smallImgs.forEach(function (img, index) {
+                img.addEventListener("click", function () {
+                    // Bỏ chọn tất cả các ảnh nhỏ
+                    smallImgs.forEach(function (smallImg) {
+                        smallImg.classList.remove("selected");
+                    });
 
-                                            // Chọn ảnh nhỏ được click
-                                            this.classList.add("selected");
+                    // Chọn ảnh nhỏ được click
+                    this.classList.add("selected");
 
-                                            // Hiển thị ảnh lớn tương ứng
-                                            largeImg.src = this.src;
+                    // Hiển thị ảnh lớn tương ứng
+                    largeImg.src = this.src;
 
-                                            // Cập nhật chỉ số hiện tại
-                                            currentIndex = index;
-                                        });
-                                    });
+                    // Cập nhật chỉ số hiện tại
+                    currentIndex = index;
+                });
+            });
 
-                                    // Thay đổi ảnh lớn sau mỗi 5 giây
-                                    setInterval(function () {
-                                        currentIndex = (currentIndex + 1) % smallImgs.length;
+            // Thay đổi ảnh lớn sau mỗi 5 giây
+            setInterval(function () {
+                currentIndex = (currentIndex + 1) % smallImgs.length;
 
-                                        // Bỏ chọn tất cả các ảnh nhỏ
-                                        smallImgs.forEach(function (smallImg) {
-                                            smallImg.classList.remove("selected");
-                                        });
+                // Bỏ chọn tất cả các ảnh nhỏ
+                smallImgs.forEach(function (smallImg) {
+                    smallImg.classList.remove("selected");
+                });
 
-                                        // Chọn ảnh nhỏ tương ứng với ảnh lớn
-                                        smallImgs[currentIndex].classList.add("selected");
+                // Chọn ảnh nhỏ tương ứng với ảnh lớn
+                smallImgs[currentIndex].classList.add("selected");
 
-                                        // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
-                                        setTimeout(function () {
-                                            largeImg.src = smallImgs[currentIndex].src;
-                                        }, 500);
+                // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
+                setTimeout(function () {
+                    largeImg.src = smallImgs[currentIndex].src;
+                    // Cuộn thanh kéo để hiển thị ảnh nhỏ tương ứng
+                    const thumbnailWidth = smallImgs[currentIndex].offsetWidth;
+                    const thumbnailLeft = smallImgs[currentIndex].offsetLeft;
+                    const scrollLeft = thumbnailLeft - thumbnailsWrapper.offsetWidth / 2 + thumbnailWidth / 2;
+                    thumbnailsWrapper.scrollLeft = scrollLeft;
+                }, 500);
 
-                                    }, 5000);
-                                });
+            }, 5000);
+        });
 
-                            </script>
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
