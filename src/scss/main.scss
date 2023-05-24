@@ -6,7 +6,7 @@
   } 
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
   .col-4, .col-3 {
     flex: 0 0 100%;
     max-width: 100%;
@@ -106,8 +106,8 @@ a{
 }
 
 a:hover{
+  color: #ce0e97;
   text-decoration: none;
-  color: #004085;
 }
 
 .screen-shot {
@@ -116,7 +116,7 @@ a:hover{
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-bottom: 3rem; /* Khoảng cách dưới */
+  margin-bottom: 3rem;
 }
 
 .image-container {

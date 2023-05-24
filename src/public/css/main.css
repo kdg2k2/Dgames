@@ -1,10 +1,9 @@
-@charset "UTF-8";
 @media (max-width: 991px) {
   .col-4, .col-3 {
     flex: 0 0 50%;
     max-width: 50%; } }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
   .col-4, .col-3 {
     flex: 0 0 100%;
     max-width: 100%; } }
@@ -83,8 +82,8 @@ a {
   color: #333; }
 
 a:hover {
-  text-decoration: none;
-  color: #004085; }
+  color: #ce0e97;
+  text-decoration: none; }
 
 .screen-shot {
   display: flex;
@@ -92,8 +91,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-bottom: 3rem;
-  /* Khoảng cách dưới */ }
+  margin-bottom: 3rem; }
 
 .image-container {
   width: 60%;
