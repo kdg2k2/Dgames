@@ -7,7 +7,7 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
 	router.get('/', homeControllers.getHomepage); // trang chủ
-	router.get('/search', userControllers.search);
+	router.get('/search', homeControllers.search);
 
 	// --------------User space---------------
 	// Login
@@ -50,7 +50,7 @@ let initWebRoutes = (app) => {
 	router.post('/game/handle-form-action', gameControllers.handleFormAction);
 
 	// Slug
-	router.get('/:slug', userControllers.showGame); // show viết mới khi click vào 1 viết mới trong trang chủ
+	router.get('/:slug', gameControllers.showGame); // show viết mới khi click vào 1 viết mới trong trang chủ
 
 	return app.use('/', router);
 };
