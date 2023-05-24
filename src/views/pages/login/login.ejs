@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title> Login
-    </title>
-    <link rel="shortcut icon" type="image" href="/image/icon.ico" />
+    <head>
+        <meta charset="UTF-8">
+        <title> Login
+        </title>
+        <link rel="shortcut icon" type="image" href="/image/icon.ico" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
-<style>
+        <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    </head>
+    <style>
     body {
         background-image: url('/image/LoginBackground.jpg');
         background-size: cover;
@@ -50,44 +51,56 @@
     }
 </style>
 
-<body>
-    <div class="pt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 mx-auto">
-                    <div class="card card-body">
-                        <form id="submitForm" action="/user/loading-user" method="POST" data-parsley-validate=""
-                            data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1">
-                            <h2>Login</h2>
-                            <input type="hidden" name="_csrf" value="7635eb83-1f95-4b32-8788-abec2724a9a4">
-                            <div class="form-group required">
-                                <label for="username"> Enter your UserName </label>
-                                <input type="text" class="form-control text-lowercase" id="username" required=""
-                                    name="username" value="">
-                            </div>
-                            <div class="form-group required">
-                                <label class="d-flex flex-row align-items-center" for="password"> Enter Password
-                                </label>
-                                <input type="password" class="form-control" required="" id="password" name="password"
-                                    value="">
-                            </div>
-                            <div class="form-group pt-1">
-                                <button class="btn btn-primary btn-block" type="submit"> Log In </button>
-                            </div>
-                        </form>
-                        <p class="small-xl pt-3 text-center">
-                            <a class="border-link small-xl" href="/user/forget-password"> Forget Password?
-                            </a>
-                            <br>
-                            <br>
-                            <span> Not a member? </span>
-                            <a href="/user/register"> Sign up </a>
-                        </p>
+    <body>
+        <div class="pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 mx-auto">
+                        <div class="card card-body">
+                            <form id="submitForm" action="/user/loading-user"
+                                method="POST" data-parsley-validate
+                                data-parsley-errors-messages-disabled="true"
+                                novalidate _lpchecked="1">
+                                <h2>Login</h2>
+                                <input type="hidden" name="_csrf"
+                                    value="7635eb83-1f95-4b32-8788-abec2724a9a4">
+                                <div class="form-group required">
+                                    <label for="username"> Enter your UserName
+                                    </label>
+                                    <input type="text"
+                                        class="form-control text-lowercase"
+                                        id="username" required
+                                        name="username" value>
+                                </div>
+                                <div class="form-group required">
+                                    <label
+                                        class="d-flex flex-row align-items-center"
+                                        for="password"> Enter Password
+                                    </label>
+                                    <input type="password" class="form-control"
+                                        required id="password" name="password"
+                                        value>
+                                </div>
+                                <div class="form-group pt-1">
+                                    <button class="btn btn-primary btn-block"
+                                        type="submit"> Log In </button>
+                                </div>
+                            </form>
+                            <p class="small-xl pt-3 text-center">
+                                <a class="border-link small-xl"
+                                    href="/user/forget-password"> Forget
+                                    Password?
+                                </a>
+                                <br>
+                                <br>
+                                <span> Not a member? </span>
+                                <a href="/user/register"> Sign up </a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
