@@ -1,6 +1,6 @@
 import Game from '../models/Game';
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 12;
 
 let getHomepage = (req, res, next) => {
   const page = parseInt(req.query.page) || 1;

@@ -1,9 +1,10 @@
+html {
+  scroll-behavior: smooth; }
+
 body {
   background-image: url("/image/homeBackground.jpg");
   background-size: cover;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden; }
+  background-attachment: fixed; }
 
 @media (max-width: 991px) {
   .col-4, .col-3 {
