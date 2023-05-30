@@ -1,47 +1,87 @@
 <%- include('../../partials/head') %>
 <body>
   <% if (loggedIn) { %>
-      <!-- Header của admin -->
-      <%- include('../../partials/adminHeader') %>
-    <% } else { %>
-      <!-- Header thường -->
-      <%- include('../../partials/header') %>
-    <% } %>
+    <!-- Header của admin -->
+    <%- include('../../partials/adminHeader') %>
+  <% } else { %>
+    <!-- Header thường -->
+    <%- include('../../partials/header') %>
+  <% } %>
 
-      <div class="container">
-        <div class="row">
-          <% var reversedData=data.slice().reverse(); %>
-            <% for(let i=0; i < reversedData.length; i++) { %>
-              <div class="col-4 col-3">
-                <div class="card mt-4 home-card-game">
-                  <a href="/<%= reversedData[i].slug %>">
-                    <img style="height: 300px;" class="card-img-top home-img-game" src="<%= reversedData[i].image %>"></a>
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <a href="/<%= reversedData[i].slug %>"><%= reversedData[i].title %></a>
-                      </h5>
-                    </div>
-                  
-                </div>
-              </div>
-              <% } %>
+  <div class="container">
+    <div class="row">
+      <% for(let i = 0; i < data.length; i++) { %>
+        <div class="col-4 col-3">
+          <div class="card mt-4 home-card-game">
+            <a href="/<%= data[i].slug %>">
+              <img style="height: 300px;" class="card-img-top home-img-game" src="<%= data[i].image %>"></a>
+            <div class="card-body">
+              <h5 class="card-title">
+                <a href="/<%= data[i].slug %>"><%= data[i].title %></a>
+              </h5>
+            </div>
+          </div>
         </div>
-      </div>
+      <% } %>
+    </div>
 
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <!-- chia trang -->
+    <% if (currentPage > 1 || data.length === ITEMS_PER_PAGE) { %>
+      <ul class="pagination justify-content-center">
+        <% if (currentPage > 1) { %>
+          <!-- Mục lục trang đầu -->
+          <li class="page-item">
+            <a class="page-link" href="?page=1">1</a>
+          </li>
+          <% if (currentPage > 2) { %>
+            <!-- Mục lục trang trước đó -->
+            <li class="page-item">
+              <a class="page-link" href="?page=<%= currentPage - 1 %>"><%= currentPage - 1 %></a>
+            </li>
+          <% } %>
+        <% } %>
+    
+        <!-- Mục lục trang hiện tại -->
+        <li class="page-item active">
+          <a class="page-link" href="?page=<%= currentPage %>"><%= currentPage %></a>
+        </li>
+    
+        <% if (data.length === ITEMS_PER_PAGE) { %>
+          <!-- Mục lục trang kế tiếp -->
+          <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage + 1 %>"><%= currentPage + 1 %></a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage + 2 %>"><%= currentPage + 2 %></a>
+          </li>
+
+          <% if (currentPage < totalPages - 3) { %>
+            <!-- Mục lục dấu "..." -->
+            <li class="page-item disabled">
+              <a class="page-link" href="#">...</a>
+            </li>
+            <!-- Mục lục trang cuối -->
+            <li class="page-item">
+              <a class="page-link" href="?page=<%= totalPages %>"><%= totalPages %></a>
+            </li>
+          <% } else if (currentPage + 3 === totalPages) { %>
+            <li class="page-item">
+              <a class="page-link" href="?page=<%= currentPage + 3 %>"><%= currentPage + 3 %></a>
+            </li>
+          <% } %>
+        <% } %>
+      </ul>
+    <% } %>
+    
+    
+  </div>
+  
+  <% if (loggedIn) { %>
+    <!-- Header của admin -->
+    <%- include('../../partials/adminFooter') %>
+  <% } else { %>
+    <!-- Header thường -->
+    <%- include('../../partials/footer') %>
+  <% } %>
 </body>
-<% if (loggedIn) { %>
-  <!-- Header của admin -->
-  <%- include('../../partials/adminFooter') %>
-<% } else { %>
-  <!-- Header thường -->
-  <%- include('../../partials/footer') %>
-<% } %>

@@ -29,4 +29,16 @@ GameSchema.plugin(mongoose_delete, {
 	deletedAt: true,
 });
 
+GameSchema.statics.getPaginatedData = async function (page, limit) {
+	const skip = (page - 1) * limit;
+	const totalCount = await this.countDocuments();
+	const totalPages = Math.ceil(totalCount / limit);
+	const data = await this.find().skip(skip).limit(limit);
+	return {
+		data,
+		totalPages,
+		currentPage: page,
+	};
+};
+
 module.exports = mongoose.model('Game', GameSchema);

@@ -1,12 +1,26 @@
 import Game from '../models/Game';
 
+const ITEMS_PER_PAGE = 1;
+
 let getHomepage = (req, res, next) => {
-	Game.find({})
-		.then((data) => {
-			res.render('pages/home/homePage.ejs', { data });
-		})
-		.catch(next);
+  const page = parseInt(req.query.page) || 1;
+
+  Game.countDocuments({})
+    .then((totalCount) => {
+      const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+      Game.find({})
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE)
+        .then((data) => {
+          res.render('pages/home/homePage.ejs', { data, currentPage: page, totalPages, ITEMS_PER_PAGE });
+        })
+        .catch(next);
+    })
+    .catch(next);
 };
+
 
 let search = (req, res, next) => {
 	const searchTerm = req.query.search;
