@@ -36,7 +36,7 @@ let loginSuccess = (req, res, next) => {
 								res.cookie('token', token); // Lưu JWT trong cookie (Cần cài đặt middleware cookie-parser)
 								// Xác định người dùng đã đăng nhập thành công
 								req.session.loggedIn = true;
-								res.redirect('/user')
+								res.redirect('/user');
 							}
 						}
 					);
@@ -45,6 +45,8 @@ let loginSuccess = (req, res, next) => {
 		})
 		.catch(next);
 };
+
+const ITEMS_PER_PAGE = 12;
 
 let logged = (req, res, next) => {
 	const token = req.cookies.token; // Lấy JWT từ cookie (Cần cài đặt middleware cookie-parser)
@@ -57,9 +59,25 @@ let logged = (req, res, next) => {
 			res.redirect('/login');
 		} else {
 			// JWT hợp lệ, tiếp tục xử lý yêu cầu
-			Game.find({})
-				.then((data) => {
-					res.render('pages/home/homePage.ejs', { data });
+			const page = parseInt(req.query.page) || 1;
+
+			Game.countDocuments({})
+				.then((totalCount) => {
+					const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+					Game.find({})
+						.sort({ createdAt: -1 })
+						.skip((page - 1) * ITEMS_PER_PAGE)
+						.limit(ITEMS_PER_PAGE)
+						.then((data) => {
+							res.render('pages/home/homePage.ejs', {
+								data,
+								currentPage: page,
+								totalPages,
+								ITEMS_PER_PAGE,
+							});
+						})
+						.catch(next);
 				})
 				.catch(next);
 		}
@@ -200,8 +218,6 @@ let createGame = (req, res) => {
 		}
 	});
 };
-
-
 
 module.exports = {
 	loginForm,

@@ -6,6 +6,9 @@ body {
   background-size: cover;
   background-attachment: fixed; }
 
+.a-content {
+  color: #fafafa; }
+
 @media (max-width: 991px) {
   .col-4, .col-3 {
     flex: 0 0 50%;

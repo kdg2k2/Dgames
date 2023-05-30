@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous" />
-    <title>Game Manager</title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <title>Game Manager</title>
 
-    <style>
+  <style>
     h1 {
       color: #000
     }
@@ -22,210 +19,196 @@
       margin-bottom: 20px;
     }
   </style>
-  </head>
+</head>
 
-  <body>
-    <%- include('../../partials/adminHeader') %>
+<body>
+  <%- include('../../partials/adminHeader') %>
 
-    <form name="container-form" action="/game/handle-form-action" method="POST">
-      <div class="my-title">
-        <h3>Games Posted</h3>
-        <a href="/game/trash">Trash (<%= deletedcount%>)</a>
+  <form name="container-form" action="/game/handle-form-action" method="POST">
+    <div class="my-title">
+      <h3>Games Posted</h3>
+      <a href="/game/trash">Trash (<%= deletedcount%>)</a>
 
-        <div class="mt-4 d-flex align-items-center">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value id="check-all">
-            <label class="form-check-label" for="check-all">
-              Check All: <label id="labelQuantity">0</label>
-            </label>
-          </div>
-
-          <select
-            class="form-control form-control-sm checkbox-select-all-options ml-3 w-25"
-            name="action" required>
-            <option value>--Action--</option>
-            <option value="delete">Delete</option>
-          </select>
-
-          <button class="btn btn-primary btn-sm btn-submit ml-3" disabled>Submit</button>
+      <div class="mt-4 d-flex align-items-center">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value id="check-all">
+          <label class="form-check-label" for="check-all">
+            Check All: <label id="labelQuantity">0</label>
+          </label>
         </div>
-      </div>
 
-      <div class="container-fluid">
-        <table class="table table-hover table-bordered mt-3 mb-5">
-          <thead class="thead-light">
-            <tr>
-              <th></th>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col">Description</th>
-              <th scope="col">Category</th>
-              <th scope="col">Developer</th>
-              <th scope="col">Version</th>
-              <th scope="col">OS</th>
-              <th scope="col">Language</th>
-              <th scope="col">Download</th>
-              <th scope="col">CreatedAt</th>
-              <th scope="col">UpdatedAt</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% var reversedData=data.slice().reverse(); %>
-            <% for(let i=0; i < reversedData.length; i++) { %>
-            <tr>
-              <td>
-                <input type="checkbox" value="<%= reversedData[i]._id %>"
-                  name="gameIds[]">
-              </td>
-              <td>
-                <%= i + 1 %>
-              </td>
-              <td>
-                <%= reversedData[i].title %>
-              </td>
-              <td>
-                <%= reversedData[i].description %>
-              </td>
-              <td>
-                <%= reversedData[i].category %>
-              </td>
-              <td>
-                <%= reversedData[i].developerInfo %>
-              </td>
-              <td>
-                <%= reversedData[i].version %>
-              </td>
-              <td>
-                <%= reversedData[i].os %>
-              </td>
-              <td>
-                <%= reversedData[i].language %>
-              </td>
-              <td>
-                <%= reversedData[i].downloadLink %>
-              </td>
-              <td>
-                <%= reversedData[i].createdAt %>
-              </td>
-              <td>
-                <%= reversedData[i].updatedAt %>
-              </td>
-              <td>
-                <a href="/game/edit/<%= reversedData[i]._id %>" class="btn-edit">Edit</a>
-              </td>
-              <td>
-                <a href class="btn-delete" data-id="<%= reversedData[i]._id %>"
-                  data-toggle="modal"
-                  data-target="#delete-game-model">Delete</a>
-              </td>
-            </tr>
-            <% } %>
-          </tbody>
+        <select class="form-control form-control-sm checkbox-select-all-options ml-3 w-25" name="action" required>
+          <option value>--Action--</option>
+          <option value="delete">Delete</option>
+        </select>
 
-        </table>
-      </div>
-    </form>
-
-    <div id="delete-game-model" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Warning</h5>
-            <button type="button" class="close" data-dismiss="modal"
-              aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you really want to delete?</p>
-          </div>
-          <div class="modal-footer">
-            <button id="btn-delete-game" type="button" class="btn btn-danger">Delete</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </div>
+        <button class="btn btn-primary btn-sm btn-submit ml-3" disabled>Submit</button>
       </div>
     </div>
 
-    <!-- form ẩn cho delete -->
-    <form name="delete-game-form" method="POST"></form>
+    <div class="container-fluid">
+      <table class="table table-hover table-bordered mt-3 mb-5">
+        <thead class="thead-light">
+          <tr>
+            <th></th>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Developer</th>
+            <th scope="col">Version</th>
+            <th scope="col">OS</th>
+            <th scope="col">Language</th>
+            <th scope="col">Download</th>
+            <th scope="col">CreatedAt</th>
+            <th scope="col">UpdatedAt</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var reversedData=data.slice().reverse(); %>
+          <% for(let i=0; i < reversedData.length; i++) { %>
+          <tr>
+            <td>
+              <input type="checkbox" value="<%= reversedData[i]._id %>" name="gameIds[]">
+            </td>
+            <td>
+              <%= i + 1 %>
+            </td>
+            <td>
+              <%= reversedData[i].title %>
+            </td>
+            <td>
+              <%= reversedData[i].description %>
+            </td>
+            <td>
+              <%= reversedData[i].category %>
+            </td>
+            <td>
+              <%= reversedData[i].developerInfo %>
+            </td>
+            <td>
+              <%= reversedData[i].version %>
+            </td>
+            <td>
+              <%= reversedData[i].os %>
+            </td>
+            <td>
+              <%= reversedData[i].language %>
+            </td>
+            <td>
+              <%= reversedData[i].downloadLink %>
+            </td>
+            <td>
+              <%= reversedData[i].createdAt %>
+            </td>
+            <td>
+              <%= reversedData[i].updatedAt %>
+            </td>
+            <td>
+              <a href="/game/edit/<%= reversedData[i]._id %>" class="btn-edit">Edit</a>
+            </td>
+            <td>
+              <a href class="btn-delete" data-id="<%= reversedData[i]._id %>" data-toggle="modal" data-target="#delete-game-model">Delete</a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var id;
-        var deleteForm = document.forms['delete-game-form'];
-        var btnDelete = document.querySelector('.btn-delete');
+      </table>
+    </div>
+  </form>
 
-        //lấy id để xóa
-        $('#delete-game-model').on('show.bs.modal', function (event) {
-          var button = $(event.relatedTarget)
-          id = button.data('id')
-        })
+  <div id="delete-game-model" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Warning</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-delete-game" type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        //xóa id
-        var btn_delete_course = document.getElementById('btn-delete-game')
-        btn_delete_course.onclick = function () {
-          deleteForm.action = '/game/' + id + '?_method=DELETE'
-          deleteForm.submit()
-        }
+  <!-- form ẩn cho delete -->
+  <form name="delete-game-form" method="POST"></form>
 
-        var checkAll = $('#check-all')
-        var btnSubmit = $('.btn-submit')
-        var gameItemCheckbox = $('input[name="gameIds[]"]')
-        var selectOption = document.querySelector('.checkbox-select-all-options')
-        var container_form = document.forms['container-form']
-        var labelQuantity = document.getElementById('labelQuantity');
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var id;
+      var deleteForm = document.forms['delete-game-form'];
+      var btnDelete = document.querySelector('.btn-delete');
 
-        //kiểm tra checkall
-        checkAll.change(function () {
-          var isChecked = $(this).prop('checked')
-          gameItemCheckbox.prop('checked', isChecked)
-          renderSubmitBtn()
-          checkedQuantity()
-        })
-
-        //kiểm tra check trên từng checkbox
-        gameItemCheckbox.change(function () {
-          var countCheck = gameItemCheckbox.length === $('input[name="gameIds[]"]:checked').length
-          if (countCheck) {
-            checkAll.prop('checked', true)
-          } else {
-            checkAll.prop('checked', false)
-          }
-          renderSubmitBtn()
-          checkedQuantity()
-        })
-
-        //enable nút submit
-        var renderSubmitBtn = () => {
-          var checkedCount = $('input[name="gameIds[]"]:checked').length;
-          if (checkedCount > 0) {
-            btnSubmit.attr('disabled', false)
-          } else {
-            btnSubmit.attr('disabled', true)
-          }
-        }
-
-        //lấy số lượng thẻ bị check show ra
-        var checkedQuantity = () => {
-          labelQuantity.innerText = $('input[name="gameIds[]"]:checked').length;
-        }
+      //lấy id để xóa
+      $('#delete-game-model').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        id = button.data('id')
       })
-    </script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
-  </body>
+      //xóa id
+      var btn_delete_course = document.getElementById('btn-delete-game')
+      btn_delete_course.onclick = function() {
+        deleteForm.action = '/game/' + id + '?_method=DELETE'
+        deleteForm.submit()
+      }
+
+      var checkAll = $('#check-all')
+      var btnSubmit = $('.btn-submit')
+      var gameItemCheckbox = $('input[name="gameIds[]"]')
+      var selectOption = document.querySelector('.checkbox-select-all-options')
+      var container_form = document.forms['container-form']
+      var labelQuantity = document.getElementById('labelQuantity');
+
+      //kiểm tra checkall
+      checkAll.change(function() {
+        var isChecked = $(this).prop('checked')
+        gameItemCheckbox.prop('checked', isChecked)
+        renderSubmitBtn()
+        checkedQuantity()
+      })
+
+      //kiểm tra check trên từng checkbox
+      gameItemCheckbox.change(function() {
+        var countCheck = gameItemCheckbox.length === $('input[name="gameIds[]"]:checked').length
+        if (countCheck) {
+          checkAll.prop('checked', true)
+        } else {
+          checkAll.prop('checked', false)
+        }
+        renderSubmitBtn()
+        checkedQuantity()
+      })
+
+      //enable nút submit
+      var renderSubmitBtn = () => {
+        var checkedCount = $('input[name="gameIds[]"]:checked').length;
+        if (checkedCount > 0) {
+          btnSubmit.attr('disabled', false)
+        } else {
+          btnSubmit.attr('disabled', true)
+        }
+      }
+
+      //lấy số lượng thẻ bị check show ra
+      var checkedQuantity = () => {
+        labelQuantity.innerText = $('input[name="gameIds[]"]:checked').length;
+      }
+    })
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
 
 </html>
