@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //mongodb+srv://kdg2k2:bachDuong2k2@cluster0.4r083er.mongodb.net/Dgames
 async function connect() {
 	try {
-		await mongoose.connect('mongodb://127.0.0.1/Dgames', {
+		await mongoose.connect('mongodb+srv://kdg2k2:bachDuong2k2@cluster0.4r083er.mongodb.net/Dgames', {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});

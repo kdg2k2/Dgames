@@ -11,12 +11,12 @@ let loginSuccess = (req, res, next) => {
 	User.findOne({ username: req.body.username })
 		.then((user) => {
 			if (!user) {
-				res.send('User not found');
+				res.status(401).send('User not found');
 			} else {
 				const hashedPassword = md5(req.body.password);
 
 				if (hashedPassword !== user.password) {
-					res.send('Wrong password');
+					res.status(402).send('Wrong password');
 				} else {
 					// Tạo JWT với thông tin người dùng
 					const payload = {
@@ -36,7 +36,7 @@ let loginSuccess = (req, res, next) => {
 								res.cookie('token', token); // Lưu JWT trong cookie (Cần cài đặt middleware cookie-parser)
 								// Xác định người dùng đã đăng nhập thành công
 								req.session.loggedIn = true;
-								res.redirect('/user');
+								res.status(200).redirect('/user');
 							}
 						}
 					);
@@ -51,12 +51,12 @@ const ITEMS_PER_PAGE = 12;
 let logged = (req, res, next) => {
 	const token = req.cookies.token; // Lấy JWT từ cookie (Cần cài đặt middleware cookie-parser)
 	if (!token) {
-		res.redirect('/login');
+		res.status(404).redirect('/login');
 		return;
 	}
 	jwt.verify(token, 'DGAMES', (err, decoded) => {
 		if (err) {
-			res.redirect('/login');
+			res.status(403).redirect('/login');
 		} else {
 			// JWT hợp lệ, tiếp tục xử lý yêu cầu
 			const page = parseInt(req.query.page) || 1;
@@ -70,7 +70,7 @@ let logged = (req, res, next) => {
 						.skip((page - 1) * ITEMS_PER_PAGE)
 						.limit(ITEMS_PER_PAGE)
 						.then((data) => {
-							res.render('pages/home/homePage.ejs', {
+							res.status(200).render('pages/home/homePage.ejs', {
 								data,
 								currentPage: page,
 								totalPages,
@@ -99,19 +99,19 @@ let postNewUser = (req, res, next) => {
 	User.findOne({ username: req.body.username })
 		.then((username) => {
 			if (username) {
-				res.send('User already exists');
+				res.status(401).send('User already exists');
 			} else {
 				User.findOne({ email: md5(req.body.email) })
 					.then((email) => {
 						if (email) {
-							res.send('Email already exists');
+							res.status(402).send('Email already exists');
 						} else {
 							const user = new User(req.body);
 							user.email = md5(req.body.email);
 							user.password = md5(req.body.password);
 							user.save()
 								.then(() => {
-									res.redirect('/login');
+									res.status(200).redirect('/login');
 								})
 								.catch(next);
 						}
@@ -130,12 +130,12 @@ let changePassword = (req, res, next) => {
 	User.findOne({ username: req.body.username })
 		.then((username) => {
 			if (!username) {
-				res.send('User not found');
+				res.status(401).send('User not found');
 			} else {
 				User.findOne({ email: md5(req.body.email) })
 					.then((email) => {
 						if (!email) {
-							res.send('Email not found');
+							res.status(401).send('Email not found');
 						} else {
 							req.body.password = md5(req.body.password);
 							req.body.email = md5(req.body.email);
@@ -143,7 +143,7 @@ let changePassword = (req, res, next) => {
 								{ username: req.body.username },
 								req.body
 							)
-								.then(() => res.redirect('back'))
+								.then(() => res.status(200).redirect('back'))
 								.catch(next);
 						}
 					})
