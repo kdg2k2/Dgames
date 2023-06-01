@@ -9,7 +9,6 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
 let app = express();
 
 //config app
@@ -26,20 +25,21 @@ app.use(session({
     saveUninitialized: true
   }));
   
-  // Middleware để xác định trạng thái xác thực của người dùng
-  app.use((req, res, next) => {
-    res.locals.loggedIn = req.session.loggedIn || false;
-    next();
-  });
+// Middleware để xác định trạng thái xác thực của người dùng
+app.use((req, res, next) => {
+  res.locals.loggedIn = req.session.loggedIn || false;
+  next();
+});
 
-
+//view
 viewEngine(app);
+//route
 initWebroutes(app);
 
 //connect to database
 db.connect();
 
-let port = process.env.PORT || 6969;
 //port === undifined => port = 6969
+let port = process.env.PORT || 6969;
 
 app.listen(port, () => console.log('Server listening on port ' + port));
