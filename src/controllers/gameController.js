@@ -1,4 +1,5 @@
 import Game from '../models/Game';
+import jwt from '../middlewares/jwtMiddleware';
 
 //show ra nội dung khi click vào
 let showGame = (req, res, next) => {
@@ -10,9 +11,25 @@ let showGame = (req, res, next) => {
 }; //----------------------
 
 //----------------------
+//render trang tạo Game
+let createGame = (req, res) => {
+	let token = req.cookies.token; // Lấy JWT từ cookie
+
+	if (!token) {
+		res.redirect('/login');
+		return;
+	}
+
+	jwt.verifyToken(token)
+		.then(() =>{
+			res.render('pages/game/createGames.ejs');
+		})
+		.catch((err)=> res.render('/login'))
+	
+};
 //POST dữ liệu tại trang create đc nhập lên server
 let postNewGame = (req, res, next) => {
-	const game = new Game(req.body);
+	let game = new Game(req.body);
 	game.category = req.body.category
 		.split('\n')
 		.map((category) => category.trim());
@@ -53,32 +70,32 @@ let editGame = (req, res, next) => {
 		.catch(next);
 };
 let putUpdatedGame = (req, res, next) => {
-	const category = req.body.category
+	let category = req.body.category
 		.split('\n')
 		.map((category) => category.trim());
 	req.body.category = category;
 
-	const developerInfo = req.body.developerInfo
+	let developerInfo = req.body.developerInfo
 		.split('\n')
 		.map((developerInfo) => developerInfo.trim());
 	req.body.developerInfo = developerInfo;
 
-	const os = req.body.os
+	let os = req.body.os
 		.split('\n')
 		.map((os) => os.trim());
 	req.body.os = os;
 
-	const downloadLink = req.body.downloadLink
+	let downloadLink = req.body.downloadLink
 		.split('\n')
 		.map((downloadLink) => downloadLink.trim());
 	req.body.downloadLink = downloadLink;
 
-	const language = req.body.language
+	let language = req.body.language
 		.split('\n')
 		.map((language) => language.trim());
 	req.body.language = language;
 
-	const screenshots = req.body.screenshots
+	let screenshots = req.body.screenshots
 		.split('\n')
 		.map((screenshot) => screenshot.trim());
 	req.body.screenshots = screenshots;
@@ -132,6 +149,7 @@ let handleFormAction = (req, res, next) => {
 
 module.exports = {
 	showGame,
+	createGame,
 	postNewGame,
 	editGame,
 	putUpdatedGame,

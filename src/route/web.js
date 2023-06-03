@@ -32,7 +32,7 @@ let initWebRoutes = (app) => {
 
 	// -------------Game Route Space----------------
 	// Create
-	router.get('/game/create', userControllers.createGame); // tạo bài viết mới
+	router.get('/game/create', gameControllers.createGame); // tạo bài viết mới
 	router.post('/post-new-game', gameControllers.postNewGame); // đẩy viết mới mới lên server
 
 	// Edit

@@ -1,6 +1,6 @@
 import User from '../models/User';
 import Game from '../models/Game';
-import jwt from 'jsonwebtoken';
+import jwt from '../middlewares/jwtMiddleware';
 import md5 from 'md5';
 
 let loginForm = (req, res, next) => {
@@ -13,57 +13,37 @@ let loginSuccess = (req, res, next) => {
 			if (!user) {
 				res.status(401).send('User not found');
 			} else {
-				const hashedPassword = md5(req.body.password);
+				let hashedPassword = md5(req.body.password);
 
 				if (hashedPassword !== user.password) {
 					res.status(402).send('Wrong password');
 				} else {
-					// Tạo JWT với thông tin người dùng
-					const payload = {
-						id: user._id,
-						username: user.username,
-					};
+					let token = jwt.generateToken(user);
 
-					jwt.sign(
-						payload,
-						'DGAMES',
-						{ expiresIn: '1h' },
-						(err, token) => {
-							if (err) {
-								throw err;
-							} else {
-								// Gửi JWT về cho người dùng
-								res.cookie('token', token); // Lưu JWT trong cookie (Cần cài đặt middleware cookie-parser)
-								// Xác định người dùng đã đăng nhập thành công
-								req.session.loggedIn = true;
-								res.status(200).redirect('/user');
-							}
-						}
-					);
+					res.cookie('token', token);//lưu token vào cookie trình duyệt
+					req.session.loggedIn = true;
+					res.status(200).redirect('/user');
 				}
 			}
 		})
 		.catch(next);
 };
 
-const ITEMS_PER_PAGE = 12;
+let ITEMS_PER_PAGE = 12;
 
 let logged = (req, res, next) => {
-	const token = req.cookies.token; // Lấy JWT từ cookie (Cần cài đặt middleware cookie-parser)
+	let token = req.cookies.token; // Lấy JWT từ cookie (Cần cài đặt middleware cookie-parser)
 	if (!token) {
 		res.status(404).redirect('/login');
 		return;
 	}
-	jwt.verify(token, 'DGAMES', (err, decoded) => {
-		if (err) {
-			res.status(403).redirect('/login');
-		} else {
-			// JWT hợp lệ, tiếp tục xử lý yêu cầu
-			const page = parseInt(req.query.page) || 1;
+	jwt.verifyToken(token)
+		.then(() => {
+			let page = parseInt(req.query.page) || 1;
 
 			Game.countDocuments({})
 				.then((totalCount) => {
-					const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+					let totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
 					Game.find({})
 						.sort({ createdAt: -1 })
@@ -80,8 +60,10 @@ let logged = (req, res, next) => {
 						.catch(next);
 				})
 				.catch(next);
-		}
-	});
+		})
+		.catch((err) => {
+			res.status(403).redirect('/login');
+		});
 };
 
 let logout = (req, res) => {
@@ -106,7 +88,7 @@ let postNewUser = (req, res, next) => {
 						if (email) {
 							res.status(402).send('Email already exists');
 						} else {
-							const user = new User(req.body);
+							let user = new User(req.body);
 							user.email = md5(req.body.email);
 							user.password = md5(req.body.password);
 							user.save()
@@ -156,18 +138,16 @@ let changePassword = (req, res, next) => {
 //----------------------
 //render trang quản lý bài viết
 let gameManager = (req, res, next) => {
-	const token = req.cookies.token; // Lấy JWT từ cookie
+	let token = req.cookies.token; // Lấy JWT từ cookie
 
 	if (!token) {
 		res.redirect('/login');
 		return;
 	}
 
-	jwt.verify(token, 'DGAMES', (err, decoded) => {
-		if (err) {
-			res.redirect('/login');
-		} else {
-			Promise.all([Game.find({}), Game.countDocumentsDeleted()])
+	jwt.verifyToken(token)
+	.then(()=>{
+		Promise.all([Game.find({}), Game.countDocumentsDeleted()])
 				.then(([data, deletedcount]) => {
 					res.render('pages/admin/postedManager.ejs', {
 						data,
@@ -175,49 +155,36 @@ let gameManager = (req, res, next) => {
 					});
 				})
 				.catch(next);
-		}
-	});
+	})
+	.catch((err)=>{
+		res.redirect('/login');
+	})
 };
 
 //render trang quản lý bài viết đã xóa
 let gameManager_trash = (req, res, next) => {
-	const token = req.cookies.token; // Lấy JWT từ cookie
+	let token = req.cookies.token; // Lấy JWT từ cookie
 
 	if (!token) {
 		res.redirect('/login');
 		return;
 	}
 
-	jwt.verify(token, 'DGAMES', (err, decoded) => {
-		if (err) {
-			res.redirect('/login');
-		} else {
+	jwt.verifyToken(token)
+		.then(()=>{
 			Game.findDeleted({})
 				.then((data) =>
 					res.render('pages/admin/deletedManager.ejs', { data })
 				)
 				.catch(next);
-		}
-	});
-};
-
-//render trang tạo Game
-let createGame = (req, res) => {
-	const token = req.cookies.token; // Lấy JWT từ cookie
-
-	if (!token) {
-		res.redirect('/login');
-		return;
-	}
-
-	jwt.verify(token, 'DGAMES', (err, decoded) => {
-		if (err) {
+		})
+		.catch((err)=>{
 			res.redirect('/login');
-		} else {
-			return res.render('pages/game/createGames.ejs');
-		}
-	});
+		})
+	
 };
+
+
 
 module.exports = {
 	loginForm,
@@ -230,5 +197,4 @@ module.exports = {
 	changePassword,
 	gameManager,
 	gameManager_trash,
-	createGame,
 };
