@@ -3,11 +3,11 @@ import bodyParser from 'body-parser';
 import viewEngine from './config/viewEngine';
 import initWebroutes from './route/web';
 require('dotenv').config();
-const db = require('./config/connectDB');
-const methodOverride = require('method-override');
-const compression = require('compression');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+let db = require('./config/connectDB');
+let methodOverride = require('method-override');
+let compression = require('compression');
+let cookieParser = require('cookie-parser');
+let session = require('./middlewares/sessionMiddleware');
 
 let app = express();
 
@@ -15,16 +15,11 @@ let app = express();
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-app.use(cookieParser());
+app.use(methodOverride('_method'));//override cho chuẩn restful api
+app.use(cookieParser());//cookie lưu jwt
 
 // Cấu hình session
-app.use(session({
-    secret: 'DGAMES',
-    resave: false,
-    saveUninitialized: true
-  }));
-  
+app.use(session)
 // Middleware để xác định trạng thái xác thực của người dùng
 app.use((req, res, next) => {
   res.locals.loggedIn = req.session.loggedIn || false;
