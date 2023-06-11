@@ -3,13 +3,13 @@ import bodyParser from 'body-parser';
 import viewEngine from './config/viewEngine';
 import initWebroutes from './route/web';
 require('dotenv').config();
-let db = require('./config/connectDB');
-let methodOverride = require('method-override');
-let compression = require('compression');
-let cookieParser = require('cookie-parser');
-let session = require('./middlewares/sessionMiddleware');
+import db from './config/connectDB';
+import methodOverride from 'method-override';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import session from './middlewares/sessionMiddleware';
 
-let app = express();
+const app = express();
 
 //config app
 app.use(compression());
@@ -23,6 +23,8 @@ app.use(session)
 // Middleware để xác định trạng thái xác thực của người dùng
 app.use((req, res, next) => {
   res.locals.loggedIn = req.session.loggedIn || false;
+  // Kiểm tra xem người dùng là admin hay user
+  res.locals.isAdmin = req.session.isAdmin || false;
   next();
 });
 

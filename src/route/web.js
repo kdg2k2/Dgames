@@ -13,7 +13,7 @@ let initWebRoutes = (app) => {
 	// Login
 	router.get('/login', userControllers.loginForm); // render trang loggin
 	router.post('/user/loading-user', userControllers.loginSuccess); // post user lên server để kiểm tra
-	router.get('/user', userControllers.logged); // render trang home của admin
+	router.get('/logged', userControllers.logged); // render trang home của admin
 
 	// Register
 	router.get('/user/register', userControllers.registerForm); // render trang register

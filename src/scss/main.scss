@@ -36,6 +36,12 @@ body {
   .language-nav{
     margin-right: auto;
   }
+
+  .text-end{
+    position:relative;
+    left: 300px;
+    bottom: 100px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -50,11 +56,13 @@ body {
     left: 20px;
   }
 
+  .text-end{
+    position:static;
+  }
+
   .search-form{
     max-width: 100%;
   }
-
-  
 }
 
 .home-card-game{

@@ -2,11 +2,16 @@
 
 <body>
   <% if (loggedIn) { %>
-  <!-- Header của admin -->
-  <%- include('../../partials/adminHeader') %>
+    <% if (isAdmin) { %>
+      <!-- Header của admin -->
+      <%- include('../../partials/adminHeader') %>
+    <% } else { %>
+      <!-- Header của user -->
+      <%- include('../../partials/userHeader') %>
+    <% } %>
   <% } else { %>
-  <!-- Header thường -->
-  <%- include('../../partials/header') %>
+    <!-- Header chưa đăng nhập -->
+    <%- include('../../partials/header') %>
   <% } %>
 
   <div class="container">

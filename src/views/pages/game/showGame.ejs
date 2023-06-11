@@ -2,11 +2,16 @@
 
 <body>
   <% if (loggedIn) { %>
-  <!-- Header của admin -->
-  <%- include('../../partials/adminHeader') %>
+    <% if (isAdmin) { %>
+      <!-- Header của admin -->
+      <%- include('../../partials/adminHeader') %>
+    <% } else { %>
+      <!-- Header của user -->
+      <%- include('../../partials/userHeader') %>
+    <% } %>
   <% } else { %>
-  <!-- Header thường -->
-  <%- include('../../partials/header') %>
+    <!-- Header chưa đăng nhập -->
+    <%- include('../../partials/header') %>
   <% } %>
 
   <div class="main-show mt-4">
@@ -14,16 +19,12 @@
       <div class="row">
         <div class="main col-8">
           <% if (data && data.image) { %>
-          <img class="avatar mt-3" src="<%= data.image %>">
+          <img class="avatar mt-3" src="<%= data.image %>" />
           <% } else { %>
           <!-- Hiển thị hình ảnh mặc định nếu không có trường "image" -->
-          <img class="avatar mt-3" src="/image/default-imagel.jpg">
-          <% } %>
-
-          <% if (data && data.title) { %>
-          <h1 class="mt-3 mb-3">
-            <%= data.title %>
-          </h1>
+          <img class="avatar mt-3" src="/image/default-imagel.jpg" />
+          <% } %> <% if (data && data.title) { %>
+          <h1 class="mt-3 mb-3"><%= data.title %></h1>
           <% } else { %>
           <h1 class="mt-3 mb-3">Untitled</h1>
           <% } %>
@@ -31,9 +32,7 @@
           <h5>OVERVIEW</h5>
           <div class="description mb-3">
             <% if (data && data.description) { %>
-            <p class="mb-3">
-              <%= data.description %>
-            </p>
+            <p class="mb-3"><%= data.description %></p>
             <% } else { %>
             <p class="mb-3">Untitled</p>
             <% } %>
@@ -42,81 +41,87 @@
           <h5>INFO</h5>
           <%if(data){%>
           <div class="info mb-3">
-            <p><strong>Category:</strong>
-              <% data.category.forEach(function(category)
-                            { %>
+            <p>
+              <strong>Category:</strong>
+              <% data.category.forEach(function(category) { %>
               <a href="/search?search=<%= category %>">
-                <%= category %>
-              </a>✔
-              <% }); %>
+                <%= category %> </a>✔ <% }); %>
             </p>
 
-            <p><strong>Developer:</strong>
+            <p>
+              <strong>Developer:</strong>
               <%
-                            data.developerInfo.forEach(function(developerInfo)
-                            { %>
+							data.developerInfo.forEach(function(developerInfo) {
+							%>
               <a href="/search?search=<%= developerInfo %>">
                 <%= developerInfo %>✔
               </a>
               <% }); %>
             </p>
 
-            <p><strong>Version:</strong>
-              <% if (data && data.version) { %>
-              <%=data.version%>
-              <% } else { %> Untitled
-              <% } %>
+            <p>
+              <strong>Version:</strong>
+              <% if (data && data.version) { %> <%=data.version%>
+              <% } else { %> Untitled <% } %>
             </p>
 
-            <p><strong>OS:</strong>
+            <p>
+              <strong>OS:</strong>
               <% data.os.forEach(function(os) { %>
-              <a href="/search?search=<%= os %>">
-                <%= os %>✔
-              </a>
+              <a href="/search?search=<%= os %>"> <%= os %>✔ </a>
               <% }); %>
             </p>
 
-            <p><strong>Languages:</strong>
-              <% data.language.forEach(function(language)
-                            { %>
+            <p>
+              <strong>Languages:</strong>
+              <% data.language.forEach(function(language) { %>
               <a href="/search?search=<%= language %>">
                 <%= language %>✔
               </a>
               <% }); %>
             </p>
-
           </div>
 
           <h5>SCREEN SHOT</h5>
           <div class="screen-shot mb-3">
             <div class="image-container">
-              <img class="large-img" src="<%= data.screenshots[0] %>">
+              <img class="large-img" src="<%= data.screenshots[0] %>" />
             </div>
             <div class="thumbnail-wrapper">
-              <% data.screenshots.forEach(function(screenshot)
-                            { %>
-              <img class="screenshot-img" src="<%= screenshot %>">
+              <% data.screenshots.forEach(function(screenshot) {
+							%>
+              <img class="screenshot-img" src="<%= screenshot %>" />
               <% }); %>
             </div>
           </div>
 
           <h5>DOWNLOAD</h5>
-          <div class="download mb-5">
-            <p><strong>Windows: </strong>
+          <div class="download mb-3">
+            <p>
+              <strong>Windows: </strong>
               <% data.downloadLink.forEach(function(downloadLink)
-                            { %>
+							{ %>
               <a class="downloadLink" href="<%= downloadLink %>">Link✔</a>
               <% }); %>
             </p>
           </div>
-          <% } else { %>
-          <% } %>
+          <% } else { %> <% } %>
+
+          <h5>Comments</h5>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                Post
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="col-3">
           <div class="content">
-            <a href="#"><img class="FB" src="/image/FB.png" alt></a>
-            <a href="#"><img class="DC" src="/image/DC.png" alt></a>
+            <a href="#"><img class="FB" src="/image/FB.png" alt /></a>
+            <a href="#"><img class="DC" src="/image/DC.png" alt /></a>
           </div>
 
           <div class="discord mt-4">
@@ -138,7 +143,7 @@
         content.style.top = '30px';
 
         discord.style.position = 'fixed';
-        discord.style.top = '180px'
+        discord.style.top = '180px';
       } else {
         content.style.position = 'static';
         discord.style.position = 'static';
@@ -146,26 +151,27 @@
     });
 
     // Lắng nghe sự kiện click trên ảnh nhỏ
-    document.addEventListener("DOMContentLoaded", function() {
-      const smallImgs = document.querySelectorAll(".screenshot-img");
-      const largeImg = document.querySelector(".large-img");
+    document.addEventListener('DOMContentLoaded', function() {
+      const smallImgs = document.querySelectorAll('.screenshot-img');
+      const largeImg = document.querySelector('.large-img');
       let currentIndex = 0;
-      const thumbnailsWrapper = document.querySelector('.thumbnail-wrapper');
+      const thumbnailsWrapper =
+        document.querySelector('.thumbnail-wrapper');
 
       // Hiển thị ảnh đầu tiên là ảnh mặc định
       largeImg.src = smallImgs[0].src;
-      smallImgs[0].classList.add("selected");
+      smallImgs[0].classList.add('selected');
 
       // Xử lý sự kiện click trên ảnh nhỏ
       smallImgs.forEach(function(img, index) {
-        img.addEventListener("click", function() {
+        img.addEventListener('click', function() {
           // Bỏ chọn tất cả các ảnh nhỏ
           smallImgs.forEach(function(smallImg) {
-            smallImg.classList.remove("selected");
+            smallImg.classList.remove('selected');
           });
 
           // Chọn ảnh nhỏ được click
-          this.classList.add("selected");
+          this.classList.add('selected');
 
           // Hiển thị ảnh lớn tương ứng
           largeImg.src = this.src;
@@ -181,11 +187,11 @@
 
         // Bỏ chọn tất cả các ảnh nhỏ
         smallImgs.forEach(function(smallImg) {
-          smallImg.classList.remove("selected");
+          smallImg.classList.remove('selected');
         });
 
         // Chọn ảnh nhỏ tương ứng với ảnh lớn
-        smallImgs[currentIndex].classList.add("selected");
+        smallImgs[currentIndex].classList.add('selected');
 
         // Sau khoảng thời gian nhỏ, hiển thị ảnh mới và thêm hiệu ứng mờ dần
         setTimeout(function() {
@@ -193,19 +199,19 @@
           // Cuộn thanh kéo để hiển thị ảnh nhỏ tương ứng
           const thumbnailWidth = smallImgs[currentIndex].offsetWidth;
           const thumbnailLeft = smallImgs[currentIndex].offsetLeft;
-          const scrollLeft = thumbnailLeft - thumbnailsWrapper.offsetWidth / 2 + thumbnailWidth / 2;
+          const scrollLeft =
+            thumbnailLeft -
+            thumbnailsWrapper.offsetWidth / 2 +
+            thumbnailWidth / 2;
           thumbnailsWrapper.scrollLeft = scrollLeft;
         }, 500);
-
       }, 5000);
     });
   </script>
-  
+
   <% if (loggedIn) { %>
   <!-- Header của admin -->
-  <%- include('../../partials/adminFooter') %>
-  <% } else { %>
+  <%- include('../../partials/adminFooter') %> <% } else { %>
   <!-- Header thường -->
-  <%- include('../../partials/footer') %>
-  <% } %>
+  <%- include('../../partials/footer') %> <% } %>
 </body>

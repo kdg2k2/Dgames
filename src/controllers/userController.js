@@ -22,7 +22,15 @@ let loginSuccess = (req, res, next) => {
 
 					res.cookie('token', token); //lưu token vào cookie trình duyệt
 					req.session.loggedIn = true;
-					res.status(200).redirect('/user');
+
+					if(user.isAdmin){
+						req.session.isAdmin = true;
+					}
+					else{
+						req.session.isAdmin = false;
+					}
+
+					res.status(200).redirect('/logged');
 				}
 			}
 		})

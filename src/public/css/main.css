@@ -20,7 +20,11 @@ body {
   .search-form {
     max-width: 90%; }
   .language-nav {
-    margin-right: auto; } }
+    margin-right: auto; }
+  .text-end {
+    position: relative;
+    left: 300px;
+    bottom: 100px; } }
 
 @media (max-width: 767px) {
   .col-4, .col-3 {
@@ -30,6 +34,8 @@ body {
     position: absolute;
     top: 10px;
     left: 20px; }
+  .text-end {
+    position: static; }
   .search-form {
     max-width: 100%; } }
 
