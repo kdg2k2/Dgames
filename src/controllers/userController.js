@@ -22,6 +22,7 @@ let loginSuccess = (req, res, next) => {
 
 					res.cookie('token', token); //lưu token vào cookie trình duyệt
 					req.session.loggedIn = true;
+					req.session.username = user.username;
 
 					if(user.isAdmin){
 						req.session.isAdmin = true;

@@ -2,16 +2,16 @@
 
 <body>
   <% if (loggedIn) { %>
-    <% if (isAdmin) { %>
-      <!-- Header của admin -->
-      <%- include('../../partials/adminHeader') %>
-    <% } else { %>
-      <!-- Header của user -->
-      <%- include('../../partials/userHeader') %>
-    <% } %>
+  <% if (isAdmin) { %>
+  <!-- Header của admin -->
+  <%- include('../../partials/adminHeader') %>
   <% } else { %>
-    <!-- Header chưa đăng nhập -->
-    <%- include('../../partials/header') %>
+  <!-- Header của user -->
+  <%- include('../../partials/userHeader') %>
+  <% } %>
+  <% } else { %>
+  <!-- Header chưa đăng nhập -->
+  <%- include('../../partials/header') %>
   <% } %>
 
   <div class="main-show mt-4">
@@ -108,12 +108,26 @@
           <% } else { %> <% } %>
 
           <h5>Comments</h5>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
-                Post
-              </button>
+          <div class="comment">
+            <% if (loggedIn) { %>
+            <form action="/post-comment/<%=data.slug%>" method="post">
+              <div class="input-group mb-3">
+                <input type="text" value="<%=data._id%>" name="id" hidden>
+                <input type="text" class="form-control" name="content"/>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit">
+                    Post
+                  </button>
+                </div>
+              </div>
+            </form><% } %>
+
+            <div class="commented-content mb-5">
+              <% if(data.comments) { %>
+                <% data.comments.forEach(function(comment) { %>
+                  <li><%=comment.author%>: <%=comment.content%> : <%=comment.createdAt%></li>
+                <% }); %>
+              <% }; %>
             </div>
           </div>
         </div>

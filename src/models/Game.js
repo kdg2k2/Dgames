@@ -4,6 +4,17 @@ const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
+const CommentSchema = new Schema(
+	{
+		author: { type: String },
+		content: { type: String },
+		createdAt: { type: Date, default: Date.now },
+	},
+	{
+		timestamps: true,
+	}
+);
+
 const GameSchema = new Schema(
 	{
 		title: { type: String },
@@ -16,7 +27,8 @@ const GameSchema = new Schema(
 		language: [{ type: String }],
 		downloadLink: [{ type: String }],
 		slug: { type: String, slug: 'title', unique: true },
-		screenshots: [{ type: String }], 
+		screenshots: [{ type: String }],
+		comments: [CommentSchema],
 	},
 	{
 		timestamps: true,

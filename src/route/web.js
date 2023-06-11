@@ -51,6 +51,7 @@ let initWebRoutes = (app) => {
 
 	// Slug
 	router.get('/:slug', gameControllers.showGame); // show viết mới khi click vào 1 viết mới trong trang chủ
+	router.post('/post-comment/:slug', gameControllers.postComment); // post comment
 
 	return app.use('/', router);
 };

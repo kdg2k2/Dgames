@@ -1,4 +1,5 @@
 import Game from '../models/Game';
+import Comment from '../models/Game';
 import jwt from '../middlewares/jwtMiddleware';
 
 //show ra nội dung khi click vào
@@ -21,11 +22,10 @@ let createGame = (req, res) => {
 	}
 
 	jwt.verifyToken(token)
-		.then(() =>{
+		.then(() => {
 			res.render('pages/game/createGames.ejs');
 		})
-		.catch((err)=> res.render('/login'))
-	
+		.catch((err) => res.render('/login'));
 };
 //POST dữ liệu tại trang create đc nhập lên server
 let postNewGame = (req, res, next) => {
@@ -38,9 +38,7 @@ let postNewGame = (req, res, next) => {
 		.split('\n')
 		.map((developerInfo) => developerInfo.trim());
 
-	game.os = req.body.os
-		.split('\n')
-		.map((os) => os.trim());
+	game.os = req.body.os.split('\n').map((os) => os.trim());
 
 	game.downloadLink = req.body.downloadLink
 		.split('\n')
@@ -80,9 +78,7 @@ let putUpdatedGame = (req, res, next) => {
 		.map((developerInfo) => developerInfo.trim());
 	req.body.developerInfo = developerInfo;
 
-	let os = req.body.os
-		.split('\n')
-		.map((os) => os.trim());
+	let os = req.body.os.split('\n').map((os) => os.trim());
 	req.body.os = os;
 
 	let downloadLink = req.body.downloadLink
@@ -101,15 +97,15 @@ let putUpdatedGame = (req, res, next) => {
 	req.body.screenshots = screenshots;
 
 	Game.updateOne({ _id: req.params.id }, req.body)
-		.then(()=> res.redirect('/game'))
-		.catch(next)
+		.then(() => res.redirect('/game'))
+		.catch(next);
 };
 
 let moveToTrash = (req, res, next) => {
 	Game.delete({ _id: req.params.id })
-	.then(() => res.redirect('back'))
-	.catch(next);
-}
+		.then(() => res.redirect('back'))
+		.catch(next);
+};
 
 let forceDelete = (req, res, next) => {
 	Game.deleteOne({ _id: req.params.id })
@@ -147,6 +143,30 @@ let handleFormAction = (req, res, next) => {
 	}
 };
 
+let postComment = (req, res) => {
+	const postId = req.body.id;
+
+	// Tạo một đối tượng comment mới
+	const comment = {
+		content: req.body.content,
+		author: req.session.username,
+		createdAt: new Date(),
+	};
+
+	// Tìm và cập nhật bài viết tương ứng trong cơ sở dữ liệu
+	Game.findByIdAndUpdate(
+		postId,
+		{ $push: { comments: comment } },
+		{ new: true }
+	)
+		.then((updatedGame) => {
+			res.redirect('back');
+		})
+		.catch((error) => {
+			res.status(500).json({ error: 'Có lỗi xảy ra khi lưu bình luận.' });
+		});
+};
+
 module.exports = {
 	showGame,
 	createGame,
@@ -157,4 +177,5 @@ module.exports = {
 	forceDelete,
 	restoreGame,
 	handleFormAction,
+	postComment,
 };
