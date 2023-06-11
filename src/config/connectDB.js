@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-//mongodb://127.0.0.1/Dgames
-//mongodb+srv://kdg2k2:bachDuong2k2@cluster0.4r083er.mongodb.net/Dgames
+require('dotenv').config();
+
 async function connect() {
 	try {
-		await mongoose.connect('mongodb+srv://kdg2k2:bachDuong2k2@cluster0.4r083er.mongodb.net/Dgames', {
+		await mongoose.connect(process.env.MONGODB_URL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
