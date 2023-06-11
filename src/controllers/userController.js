@@ -20,7 +20,7 @@ let loginSuccess = (req, res, next) => {
 				} else {
 					let token = jwt.generateToken(user);
 
-					res.cookie('token', token);//lưu token vào cookie trình duyệt
+					res.cookie('token', token); //lưu token vào cookie trình duyệt
 					req.session.loggedIn = true;
 					res.status(200).redirect('/user');
 				}
@@ -146,8 +146,11 @@ let gameManager = (req, res, next) => {
 	}
 
 	jwt.verifyToken(token)
-	.then(()=>{
-		Promise.all([Game.find({}), Game.countDocumentsDeleted()])
+		.then(() => {
+			Promise.all([
+				Game.find({}).sort({ createdAt: -1 }),
+				Game.countDocumentsDeleted(),
+			])
 				.then(([data, deletedcount]) => {
 					res.render('pages/admin/postedManager.ejs', {
 						data,
@@ -155,10 +158,10 @@ let gameManager = (req, res, next) => {
 					});
 				})
 				.catch(next);
-	})
-	.catch((err)=>{
-		res.redirect('/login');
-	})
+		})
+		.catch((err) => {
+			res.redirect('/login');
+		});
 };
 
 //render trang quản lý bài viết đã xóa
@@ -171,20 +174,18 @@ let gameManager_trash = (req, res, next) => {
 	}
 
 	jwt.verifyToken(token)
-		.then(()=>{
+		.then(() => {
 			Game.findDeleted({})
+				.sort({ deletedAt: -1 })
 				.then((data) =>
 					res.render('pages/admin/deletedManager.ejs', { data })
 				)
 				.catch(next);
 		})
-		.catch((err)=>{
+		.catch((err) => {
 			res.redirect('/login');
-		})
-	
+		});
 };
-
-
 
 module.exports = {
 	loginForm,

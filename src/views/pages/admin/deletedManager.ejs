@@ -67,47 +67,46 @@
           </tr>
         </thead>
         <tbody>
-          <% var reversedData=data.slice().reverse(); %>
-          <% for(let i=0; i < reversedData.length; i++) { %>
+          <% for(let i=0; i < data.length; i++) { %>
           <tr>
             <td>
-              <input type="checkbox" value="<%= reversedData[i]._id %>" name="gameIds[]">
+              <input type="checkbox" value="<%= data[i]._id %>" name="gameIds[]">
             </td>
             <td>
               <%= i + 1 %>
             </td>
             <td>
-              <%= reversedData[i].title %>
+              <%= data[i].title %>
             </td>
             <td>
-              <%= reversedData[i].description %>
+              <%= data[i].description %>
             </td>
             <td>
-              <%= reversedData[i].category %>
+              <%= data[i].category %>
             </td>
             <td>
-              <%= reversedData[i].developerInfo %>
+              <%= data[i].developerInfo %>
             </td>
             <td>
-              <%= reversedData[i].version %>
+              <%= data[i].version %>
             </td>
             <td>
-              <%= reversedData[i].os %>
+              <%= data[i].os %>
             </td>
             <td>
-              <%= reversedData[i].language %>
+              <%= data[i].language %>
             </td>
             <td>
-              <%= reversedData[i].downloadLink %>
+              <%= data[i].downloadLink %>
             </td>
             <td>
-              <%= reversedData[i].deletedAt %>
+              <%= data[i].deletedAt %>
             </td>
             <td>
-              <a href class="btn-restore" data-id="<%= reversedData[i]._id %>">Restore</a>
+              <a href class="btn-restore" data-id="<%= data[i]._id %>">Restore</a>
             </td>
             <td>
-              <a href class="btn-delete" data-id="<%= reversedData[i]._id %>" data-toggle="modal" data-target="#delete-game-model">Force
+              <a href class="btn-delete" data-id="<%= data[i]._id %>" data-toggle="modal" data-target="#delete-game-model">Force
                 Delete</a>
             </td>
           </tr>
