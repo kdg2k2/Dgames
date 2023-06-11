@@ -11,6 +11,37 @@
     h1 {
       color: #000
     }
+
+    @media (max-width: 991px) {
+      .dropdown-nav {
+        display: none;
+      }
+
+      .admin-menu,
+      .search-form {
+        margin-left: auto;
+      }
+
+      .search-form {
+        max-width: 90%;
+      }
+
+      .language-nav {
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .admin-menu {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+      }
+
+      .search-form {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 

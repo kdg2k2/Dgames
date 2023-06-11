@@ -13,8 +13,6 @@ body {
   .col-4, .col-3 {
     flex: 0 0 50%;
     max-width: 50%; }
-  .dropdown-nav {
-    display: none; }
   .admin-menu, .search-form {
     margin-left: auto; }
   .search-form {
@@ -32,8 +30,8 @@ body {
     max-width: 100%; }
   .admin-menu {
     position: absolute;
-    top: 10px;
-    left: 20px; }
+    top: 90px;
+    left: 15%; }
   .text-end {
     position: static; }
   .search-form {
