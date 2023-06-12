@@ -38,7 +38,7 @@
                 <% if (favCheck.slug == data.slug) { %>
                   <form action="/remove-from-favourite/<%=data.slug%>?_method=DELETE" method="post">
                     <input type="text" value="<%=data.slug%>" name="slug" hidden>
-                    <button class="btn btn-outline-secondary remove-favourite-btn" type="submit">Remove from favorites</button>
+                    <button class="btn btn-outline-secondary remove-favourite-btn" type="submit">Remove from favorites ❌</button>
                   </form>
                 <% } else { %>
                   <form action="/add-to-favourite/<%=data.slug%>" method="post">
@@ -46,7 +46,7 @@
                     <input type="text" value="<%=data.title%>" name="title" hidden>
                     <input type="text" value="<%=data.image%>" name="image" hidden>
                     <input type="text" value="" name="username" hidden>
-                    <button class="btn btn-outline-secondary add-favourite-btn" type="submit">Add to favourites</button>
+                    <button class="btn btn-outline-secondary add-favourite-btn" type="submit">Add to favourites ❤</button>
                   </form>
                 <% } %>
               <% } else { %>
@@ -55,7 +55,7 @@
                   <input type="text" value="<%=data.title%>" name="title" hidden>
                   <input type="text" value="<%=data.image%>" name="image" hidden>
                   <input type="text" value="" name="username" hidden>
-                  <button class="btn btn-outline-secondary add-favourite-btn" type="submit">Add to favourites</button>
+                  <button class="btn btn-outline-secondary add-favourite-btn" type="submit">Add to favourites ❤</button>
                 </form>
               <% } %>
             <% } %>

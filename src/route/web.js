@@ -57,7 +57,8 @@ let initWebRoutes = (app) => {
 	// Me
 	router.get('/me/favourite', meControllers.getFavourite); //get favourite post
 	router.post('/add-to-favourite/:slug', meControllers.postFavourite); // post favourite
-	router.delete('/remove-from-favourite/:slug', meControllers.removeFavourite); // post favourite
+	router.delete('/remove-from-favourite/:slug', meControllers.removeFavourite); // delete favourite
+	router.get('/user/change-password', meControllers.changePassword); // post favourite
 
 	return app.use('/', router);
 };

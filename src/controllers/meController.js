@@ -42,8 +42,22 @@ let removeFavourite = (req, res, next) => {
 		.catch(next);
 };
 
+let changePassword = (req, res, next) =>{
+	let token = req.cookies.token;
+	if (!token) {
+		res.status(404).redirect('/login');
+		return;
+	}
+	jwt.verifyToken(token)
+		.then(() => {
+			res.render('pages/me/changePassword.ejs');
+		})
+		.catch(next);
+}
+
 module.exports = {
 	postFavourite,
 	getFavourite,
 	removeFavourite,
+	changePassword,
 };

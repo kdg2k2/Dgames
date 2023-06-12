@@ -24,10 +24,9 @@ let loginSuccess = (req, res, next) => {
 					req.session.loggedIn = true;
 					req.session.username = user.username;
 
-					if(user.isAdmin){
+					if (user.isAdmin) {
 						req.session.isAdmin = true;
-					}
-					else{
+					} else {
 						req.session.isAdmin = false;
 					}
 
