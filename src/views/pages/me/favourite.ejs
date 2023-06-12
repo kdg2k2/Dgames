@@ -1,0 +1,45 @@
+<%- include('../../partials/head') %>
+
+<body>
+  <% if (loggedIn) { %>
+  <% if (isAdmin) { %>
+  <!-- Header của admin -->
+  <%- include('../../partials/adminHeader') %>
+  <% } else { %>
+  <!-- Header của user -->
+  <%- include('../../partials/userHeader') %>
+  <% } %>
+  <% } else { %>
+  <!-- Header chưa đăng nhập -->
+  <%- include('../../partials/header') %>
+  <% } %>
+
+  <div class="container">
+    <div class="row">
+      <% if (data) { %>
+        <% data.forEach(item => { %>
+          <div class="col-4 col-3">
+            <div class="card mt-4 home-card-game">
+              <a href="/<%= item.slug %>">
+                <img style="height: 300px;" class="card-img-top home-img-game" src="<%= item.image %>"></a>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/<%= item.slug %>"><%= item.title %></a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } if(data == '') { %>
+        <h4 style="color: #fafafa;">No favourite items found.</h4>
+      <% } %>
+    </div>
+
+    <% if (loggedIn) { %>
+    <!-- Header của admin -->
+    <%- include('../../partials/adminFooter') %>
+    <% } else { %>
+    <!-- Header thường -->
+    <%- include('../../partials/footer') %>
+    <% } %>
+</body>

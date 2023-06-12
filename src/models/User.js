@@ -5,6 +5,7 @@ var UserSchema = new Schema({
 	password: { type: String },
 	email: { type: String },
 	isAdmin: { type: Boolean, default: false },
+	favourite: [{ type: String }],
 },
 {
 	timestamps: true,

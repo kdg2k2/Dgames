@@ -2,6 +2,7 @@ import express from 'express';
 import homeControllers from '../controllers/homeController';
 import gameControllers from '../controllers/gameController';
 import userControllers from '../controllers/userController';
+import meControllers from '../controllers/meController';
 
 let router = express.Router();
 
@@ -52,6 +53,11 @@ let initWebRoutes = (app) => {
 	// Slug
 	router.get('/:slug', gameControllers.showGame); // show viết mới khi click vào 1 viết mới trong trang chủ
 	router.post('/post-comment/:slug', gameControllers.postComment); // post comment
+
+	// Me
+	router.get('/me/favourite', meControllers.getFavourite); //get favourite post
+	router.post('/add-to-favourite/:slug', meControllers.postFavourite); // post favourite
+	router.delete('/remove-from-favourite/:slug', meControllers.removeFavourite); // post favourite
 
 	return app.use('/', router);
 };

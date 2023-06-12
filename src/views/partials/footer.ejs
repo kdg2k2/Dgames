@@ -1,4 +1,4 @@
-</html>
+
 <div class="container">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
     <p class="col-md-4 mb-0 footer">&copy; 2023 Simple Blog</p>
@@ -8,3 +8,23 @@
     </ul>
   </footer>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var moveUp = document.querySelector('.move-up');
+      moveUp.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      var moveDown = document.querySelector('.move-down');
+      moveDown.addEventListener('click', function() {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    });
+</script>

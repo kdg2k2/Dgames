@@ -1,12 +1,15 @@
 import Game from '../models/Game';
-import Comment from '../models/Game';
+import Favourite from '../models/Favourite';
 import jwt from '../middlewares/jwtMiddleware';
 
 //show ra nội dung khi click vào
 let showGame = (req, res, next) => {
-	Game.findOne({ slug: req.params.slug })
-		.then((data) => {
-			res.render('pages/game/showGame.ejs', { data });
+	Promise.all([
+		Game.findOne({ slug: req.params.slug }),
+		Favourite.findOne({ slug: req.params.slug, username: req.session.username }),
+	])
+		.then(([data, favCheck]) => {
+			res.render('pages/game/showGame.ejs', { data, favCheck});
 		})
 		.catch(next);
 }; //----------------------
